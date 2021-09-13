@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.ActivityPage"
+             Title="Активность гильдии"  BackgroundImageSource="background.png">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Обновить"
+                     Clicked="OnUpdateInfo"  />
+
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid x:Name="ErrorFrame" Margin="{StaticResource PageMargin}">
+
+
+                <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+
+                <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"     >
+
+                </Label>
+                <Label x:Name="ErrorText"  Margin="{StaticResource PageMargin}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"    >
+
+                </Label>
+
+            </Grid>
+            <Grid x:Name="UpdaterGrid" Margin="{StaticResource PageMargin}">
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+
+                <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+                <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="DarkRed"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Немного потерпим...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Получаю данные от Blizzard...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3"/>
+                <Label x:Name="Progress" FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="{Binding progress}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"/>
+
+            </Grid>
+
+            <CollectionView x:Name="ActivityView"
+                    Margin="{StaticResource PageMargin}"
+                    SelectionMode="None"
+                   >
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                               ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <!-- Define the appearance of each item in the list -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="200" />
+
+
+                                </Grid.RowDefinitions>
+
+                                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+
+                            <!--    <Grid Margin="15">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>-->
+                                    <Label Text="{Binding Name}"   FontFamily="MORPHEUS.TTF" TextColor="DarkRed" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="15"/>
+
+                                <!--  
+
+                                    <Label Text="{Binding Mode}"   FontFamily="MORPHEUS.TTF" TextColor="Red" FontSize="Medium"  Grid.Row="1" HorizontalTextAlignment="Center"/>
+
+
+                                    <Label Text="{Binding Time}"   FontFamily="MORPHEUS.TTF" TextColor="Red" FontSize="Small"  Grid.Row="2" HorizontalTextAlignment="Center"/>
+                                </Grid>-->
+
+                            </Grid>
+
+
+
+
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

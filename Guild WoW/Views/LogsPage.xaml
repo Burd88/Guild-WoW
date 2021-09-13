@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             x:Class="Notes.Views.LogsPage"
+             Title="Логи" BackgroundImageSource="background.png">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Обновить"
+                     Clicked="OnUpdateInfo" />
+
+    </ContentPage.ToolbarItems>
+   
+        
+        <ContentPage.Content>
+            <StackLayout>
+            <Grid x:Name="ErrorFrame" Margin="{StaticResource PageMargin}">
+
+
+                <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+
+                <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"     >
+
+                </Label>
+                <Label x:Name="ErrorText"  Margin="{StaticResource PageMargin}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"    >
+
+                </Label>
+
+            </Grid>
+            <Grid x:Name="UpdaterGrid" Margin="{StaticResource PageMargin}">
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+
+                <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+                <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="DarkRed"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Немного потерпим...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Получаю данные от WarcraftLogs...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3"/>
+                <Label x:Name="Progress" FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="{Binding progress}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"/>
+
+            </Grid>
+
+            <CollectionView x:Name="Logs_Data"
+                    Margin="{StaticResource PageMargin}"
+                    SelectionMode="Single" SelectionChanged="OnSelectionChanged" 
+                   >
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                               ItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <!-- Define the appearance of each item in the list -->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="150" />
+
+
+                                    </Grid.RowDefinitions>
+
+                                    <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                                    <Grid   Margin="0" Padding="15">
+                                        <Grid Grid.Row="0"   Margin="0">
+                                        <Label Text="{Binding Dungeon}"   FontFamily="MORPHEUS.TTF" TextColor="{x:StaticResource TextLogsPage}" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                                        </Grid>
+                                        <Grid Grid.Row="1"   Margin="0">
+                                        <Label Text="Дата:" Grid.Column="0"   FontFamily="MORPHEUS.TTF" TextColor="{x:StaticResource TextLogsPage}" FontSize="Small"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        <Label Text="{Binding Date_start}" Grid.Column="1"  FontFamily="MORPHEUS.TTF" TextColor="{x:StaticResource TextLogsPage}" FontSize="Small"  HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
+                                    </Grid>
+                                        <Grid Grid.Row="2"  Margin="0">
+                                        <Label Text="Загрузил:"  Grid.Column="0"   FontFamily="MORPHEUS.TTF" TextColor="{x:StaticResource TextLogsPage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                                        <Label Text="{Binding Downloader}"  Grid.Column="1"   FontFamily="MORPHEUS.TTF" TextColor="{x:StaticResource TextLogsPage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+                                    </Grid>
+
+                                    </Grid>
+                                </Grid>
+
+
+
+
+
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+<!-- Place new controls here PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" -->
+
+                <!--   <dg:DataGrid x:Name="Logs_Data" ItemsSource="{Binding Logs_List}" SelectionEnabled="True" SelectedItem="{Binding SelectedLogs}" RowHeight="70" HeaderHeight="50"
+
+                    BorderColor="Red" HeaderBackground="DarkRed"  ActiveRowColor="#8899AA" FontFamily="MORPHEUS.TTF" HeaderTextColor="Black" Background="Red"  >
+          
+            <x:Arguments>
+               
+                <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+               
+            </x:Arguments>
+           
+            <dg:DataGrid.HeaderFontSize>
+              
+                <OnIdiom x:TypeArguments="x:Double">
+                  
+                    <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                   
+                    <OnIdiom.Phone>12</OnIdiom.Phone>
+                   
+                </OnIdiom>
+              
+            </dg:DataGrid.HeaderFontSize>
+           
+            <dg:DataGrid.Columns >
+
+                
+
+                <dg:DataGridColumn PropertyName="Dungeon" Width="*" HorizontalContentAlignment="Center" >
+                   
+                    <dg:DataGridColumn.FormattedTitle>
+                       
+                        <FormattedString>
+
+                            <Span Text="Dungeon" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                        </FormattedString>
+                       
+                    </dg:DataGridColumn.FormattedTitle>
+                   
+                </dg:DataGridColumn>
+
+                <dg:DataGridColumn Title="Дата" PropertyName="Date_start" Width="*" HorizontalContentAlignment="Center">
+                    <dg:DataGridColumn.FormattedTitle>
+
+                        <FormattedString>
+
+                            <Span Text="Дата" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                        </FormattedString>
+
+                    </dg:DataGridColumn.FormattedTitle>
+                </dg:DataGridColumn>
+
+
+
+                <dg:DataGridColumn Title="Загрузил" PropertyName="Downloader" Width="*" HorizontalContentAlignment="Center">
+                    <dg:DataGridColumn.FormattedTitle>
+
+                        <FormattedString>
+
+                            <Span Text="Загрузил" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                        </FormattedString>
+
+                    </dg:DataGridColumn.FormattedTitle>
+                </dg:DataGridColumn>
+               
+            </dg:DataGrid.Columns>
+           
+            <dg:DataGrid.RowsBackgroundColorPalette>
+                
+                <dg:PaletteCollection>
+                   
+                    <Color>#F2F2F2</Color>
+                  
+                    <Color>#FFFFFF</Color>
+                   
+                </dg:PaletteCollection>
+
+            </dg:DataGrid.RowsBackgroundColorPalette>
+
+        </dg:DataGrid>
+        </Grid>
+        </Grid>
+    </ContentView>
+
+</ContentPage>-->

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.App">
+
+    <!-- Resources used by multiple pages in the application -->
+    
+    <Application.Resources>
+
+        <Thickness x:Key="PageMargin">20</Thickness>
+        <x:Double x:Key="BAckOpacityMember">0.6</x:Double>
+        <!-- Colors -->
+        <Color x:Key="AppPrimaryColor">#1976D2</Color>
+        <Color x:Key="AppBackgroundColor">AliceBlue</Color>
+        <Color x:Key="PrimaryColor">Black</Color>
+        <Color x:Key="SecondaryColor">White</Color>
+        <Color x:Key="TertiaryColor">Silver</Color>
+        <Color x:Key="BackMemberColor">black</Color>
+        <Color x:Key="TextColorPage">DarkSlateGray</Color>
+        <Color x:Key="TextMainPage">black</Color>
+        <Color x:Key="TextRosterPage">white</Color>
+        <Color x:Key="TextMemberPage">white</Color>
+        <Color x:Key="TextMemberActivePage">Black</Color>
+        <Color x:Key="TextLoadErrorPage">Black</Color>
+        <Color x:Key="TextLogsPage">DarkSlateGray</Color>
+        
+
+
+        
+        <!-- Implicit styles -->
+        <Style TargetType="ContentPage"
+               ApplyToDerivedTypes="True">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource AppBackgroundColor}" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize"
+                    Value="Medium" />
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource AppPrimaryColor}" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource SecondaryColor}" />
+            <Setter Property="CornerRadius"
+                    Value="5" />
+        </Style>
+
+    </Application.Resources>
+    
+</Application>
+    

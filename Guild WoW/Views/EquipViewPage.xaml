@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.EquipViewPage" BackgroundColor="Black">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Обновить"
+                     Clicked="OnUpdateInfo" />
+
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <Grid VerticalOptions="FillAndExpand">
+            
+            <Image x:Name="Main_image" Aspect="AspectFill"/>
+       
+        <Grid VerticalOptions="FillAndExpand">
+
+                <Label Grid.Row="0"></Label>
+
+                <ImageButton Clicked="HeadButton"  Source="{Binding head}" Grid.Row="1" Grid.Column="0" BackgroundColor="Transparent" />
+                <ImageButton Clicked="HandsButton"  Source="{Binding hands}" Grid.Row="1" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding headLVL}" Grid.Row="1" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding handsLVL}" Grid.Row="1" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="NeckButton" Source="{Binding neck}" Grid.Row="2" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="WaistButton" Source="{Binding waist}" Grid.Row="2" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding neckLVL}" Grid.Row="2" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding waistLVL}" Grid.Row="2" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="ShoulderButton" Source="{Binding shoulders}" Grid.Row="3" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="LegsButton" Source="{Binding legs}"  Grid.Row="3" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding shouldersLVL}" Grid.Row="3" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding legsLVL}" Grid.Row="3" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="BackButton" Source="{Binding back}" Grid.Row="4" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="FeetButton" Source="{Binding feet}" Grid.Row="4" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding backLVL}" Grid.Row="4" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding feetLVL}" Grid.Row="4" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="ChestButton" Source="{Binding chest}" Grid.Row="5" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="Finger1Button" Source="{Binding finger1}" Grid.Row="5" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding chestLVL}" Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding finger1LVL}" Grid.Row="5" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="ShirtButton" Source="{Binding shirt}" Grid.Row="6" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="Finger2Button" Source="{Binding finger2}" Grid.Row="6" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding shirtLVL}" Grid.Row="6" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding finger2LVL}" Grid.Row="6" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="TabardButton" Source="{Binding tabard}" Grid.Row="7" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="Trinket1Button" Source="{Binding trinket1}" Grid.Row="7" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding tabardLVL}" Grid.Row="7" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding trinket1LVL}" Grid.Row="7" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="WristButton" Source="{Binding wrist}" Grid.Row="8" Grid.Column="0" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="Trinket2Button" Source="{Binding trinket2}" Grid.Row="8" Grid.Column="3" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding wristLVL}" Grid.Row="8" Grid.Column="1" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding wristLVL}" Grid.Row="8" Grid.Column="2" BackgroundColor="Transparent" />
+
+                <ImageButton Clicked="MainHandButton" Source="{Binding main_hand}" Grid.Row="9" Grid.Column="1" BackgroundColor="Transparent"/>
+                <ImageButton Clicked="OffHandkButton" Source="{Binding off_hands}" Grid.Row="9" Grid.Column="2" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start"  Text ="{Binding main_handLVL}" Grid.Row="9" Grid.Column="0" BackgroundColor="Transparent" />
+                <Label HorizontalTextAlignment="End"  Text ="{Binding off_handsLVL}" Grid.Row="9" Grid.Column="3" BackgroundColor="Transparent" />
+
+
+                <Image Grid.Row="10"/>
+                <Grid/>
+            </Grid>
+        </Grid>
+    </StackLayout>
+   
+</ContentPage>

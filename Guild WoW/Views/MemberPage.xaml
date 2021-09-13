@@ -1,0 +1,860 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Notes.Views" 
+             x:Class="Notes.Views.MemberPage"
+             Title="Active player"
+              BackgroundImageSource="background.png" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Обновить"
+                     Clicked="OnUpdateInfo"  />
+        
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+       
+        
+        <DataTemplate x:Key="WarriorTemplate">
+                
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250" />
+
+
+                        </Grid.RowDefinitions>
+
+                        <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                        <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold" TextColor="#c69b6d" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                            </Grid>
+                            <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                                <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                                <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                            </Grid>
+                            <Grid Grid.Row="2"  Margin="0">
+                                <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                                <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Row="3"  Margin="0">
+                                <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+                
+            </DataTemplate>
+        <DataTemplate x:Key="PaladinTemplate">
+               
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250" />
+
+
+                        </Grid.RowDefinitions>
+
+                        <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                        <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#f48cba" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                            </Grid>
+                            <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                                <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                            </Grid>
+                            <Grid Grid.Row="2"  Margin="0">
+                                <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                                <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                                <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                            </Grid>
+                            <Grid Grid.Row="3"  Margin="0">
+                                <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                            </Grid>
+
+                        </Grid>
+                    </Grid>
+                
+            </DataTemplate>
+        <DataTemplate x:Key="HunterTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}"  FontAttributes="Bold" TextColor="#aad372" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="RogueTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#fff468" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="PristTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#f0ebe0" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="DeathKnightTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#c41e3b" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="ShamanTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}"  FontAttributes="Bold" TextColor="#2359ff" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="MageTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#68ccef" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="WarlockTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}"  FontAttributes="Bold" TextColor="#9382c9" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="MoncTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name"  FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#00ffba" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="DruidTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#ff7c0a" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="DemonHunterTemplate">
+
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250" />
+
+
+                </Grid.RowDefinitions>
+
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid   Margin="0" Padding="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"   Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="0" />
+                        <Image  Source="button" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Column="1" />
+                        <Grid  Opacity="{StaticResource BAckOpacityMember}" Grid.Column="2" />
+                        <Label x:Name="name" FontFamily="MORPHEUS.TTF" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#a330c9" FontSize="Medium" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                    </Grid>
+                    <Grid Grid.Row="1"   Margin="0">
+                        <Label Text="Ранг" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Ilvl"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Класс" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"   FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Спек"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Rank}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Level}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Ilevel}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}"  FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Class}" WidthRequest="20" HeightRequest="20" Grid.Column="3" Grid.Row="1" />
+                        <Image Source="{Binding Spec}" WidthRequest="20" HeightRequest="20" Grid.Column="4" Grid.Row="1" />
+                    </Grid>
+                    <Grid Grid.Row="2"  Margin="0">
+                        <Label Text="Coven"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Coven Lvl"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Raid"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="RIO"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Image Source="{Binding Coven}" WidthRequest="20" HeightRequest="20" Grid.Column="0" Grid.Row="1"/>
+                        <Label Text="{Binding Coven_lvl}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Raid}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="3"  Margin="0">
+                        <Label Text="{Binding InGame}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberActivePage}" FontSize="Small"  Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </DataTemplate>
+        
+        
+        <local:ClassSelector x:Key="ClassSelector"
+                Warrior="{StaticResource WarriorTemplate}"
+                Paladin="{StaticResource PaladinTemplate}"
+                Hunter="{StaticResource HunterTemplate}"
+                Rogue="{StaticResource RogueTemplate}"
+                Prist="{StaticResource PristTemplate}"
+                DeathKnight="{StaticResource DeathKnightTemplate}"
+                Shaman="{StaticResource ShamanTemplate}"
+                Mage="{StaticResource MageTemplate}"
+                Warlock="{StaticResource WarlockTemplate}"
+                Monc="{StaticResource MoncTemplate}"
+                Druid="{StaticResource DruidTemplate}"
+                DemonHunter="{StaticResource DemonHunterTemplate}"
+                             
+                />
+       
+    </ContentPage.Resources>
+    <StackLayout>
+        <Grid x:Name="ErrorFrame" Margin="{StaticResource PageMargin}">
+
+
+            <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+ 
+            <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="{StaticResource TextLoadErrorPage}"     >
+
+            </Label>
+            <Label x:Name="ErrorText" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="{StaticResource PageMargin}" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="{StaticResource TextLoadErrorPage}"    >
+
+            </Label>
+
+        </Grid>
+        <Grid x:Name="UpdaterGrid" Margin="{StaticResource PageMargin}">
+
+
+            <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+            <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="{StaticResource TextLoadErrorPage}"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+
+        </Grid>
+        
+        <CollectionView x:Name="MemberView"
+                    
+                    SelectionMode="Single" SelectionChanged="OnSelectionChanged" ItemTemplate="{StaticResource ClassSelector}"
+                   >
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                               ItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+            <!-- Define the appearance of each item in the list -->
+
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

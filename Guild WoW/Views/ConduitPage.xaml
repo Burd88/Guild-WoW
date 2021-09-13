@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.ConduitPage" BackgroundImageSource="background.png" >
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid x:Name="InfoGrid"  VerticalOptions="FillAndExpand">
+                <Image Source="label_back"  VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+
+                    </Grid.RowDefinitions>
+                    <Grid   Grid.Row="0" Padding="20" RowSpacing="5">
+                        <Label Text="Медиум" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+
+                        <Label x:Name="Name" Grid.Row="1" HorizontalTextAlignment="Center" FontSize="28" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                    </Grid>
+
+
+
+                <Grid  Margin="4" Grid.Row="1">
+                        <Label Text="Проводники" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+
+
+
+
+                        <Grid Grid.Row="1">
+                            <ImageButton Released="Conduit1Relesed" BackgroundColor="Transparent" x:Name="Conduit1" Grid.Row="0" Grid.Column="0" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="Conduit2Relesed" BackgroundColor="Transparent" x:Name="Conduit2"  Grid.Row="0" Grid.Column="1"  MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="Conduit3Relesed" BackgroundColor="Transparent" x:Name="Conduit3" Grid.Row="0" Grid.Column="2" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="Conduit4Relesed" BackgroundColor="Transparent" x:Name="Conduit4" Grid.Row="0" Grid.Column="3" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="Conduit5Relesed" BackgroundColor="Transparent" x:Name="Conduit5" Grid.Row="0" Grid.Column="4" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="Conduit6Relesed" BackgroundColor="Transparent" x:Name="Conduit6" Grid.Row="0" Grid.Column="5" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                        </Grid>
+
+
+                        <Grid Grid.Row="2">
+
+                            <Label x:Name="Conduitlvl1" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                            <Label x:Name="Conduitlvl2" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                            <Label x:Name="Conduitlvl3" Grid.Row="0" Grid.Column="2" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                            <Label x:Name="Conduitlvl4" Grid.Row="0" Grid.Column="3" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                            <Label x:Name="Conduitlvl5" Grid.Row="0" Grid.Column="4" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                            <Label x:Name="Conduitlvl6" Grid.Row="0" Grid.Column="5" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                        </Grid>
+
+
+                    </Grid>
+
+
+
+
+                <Grid Margin="4" Grid.Row="2">
+                        <Label Text="Таланты" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+
+
+
+
+                        <Grid Grid.Row="1">
+                            <ImageButton Released="TechTalant1Relesed" BackgroundColor="Transparent"  x:Name="TechTalant1" Grid.Row="0" Grid.Column="0" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="TechTalant2Relesed" BackgroundColor="Transparent"  x:Name="TechTalant2"  Grid.Row="0" Grid.Column="1" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="TechTalant3Relesed" BackgroundColor="Transparent"  x:Name="TechTalant3" Grid.Row="0" Grid.Column="2" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="TechTalant4Relesed" BackgroundColor="Transparent" x:Name="TechTalant4" Grid.Row="0" Grid.Column="3" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="TechTalant5Relesed" BackgroundColor="Transparent" x:Name="TechTalant5" Grid.Row="0" Grid.Column="4" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                            <ImageButton Released="TechTalant6Relesed" BackgroundColor="Transparent" x:Name="TechTalant6" Grid.Row="0" Grid.Column="5" MinimumWidthRequest="40" MinimumHeightRequest="40"></ImageButton>
+                        </Grid>
+                        <Grid Grid.Row="2"></Grid>
+                    </Grid>
+
+                </Grid> 
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

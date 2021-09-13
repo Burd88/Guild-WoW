@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Notes.Views" 
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             x:Class="Notes.Views.MembersPage"
+             Title="Все игроки"  BackgroundImageSource="label_back">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="UpdateButton" Text="Обновить"
+                     Clicked="OnUpdateInfo" />
+
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+
+
+        <DataTemplate x:Key="WarriorTemplate">
+
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#c69b6d" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+                </Grid>
+          
+
+        </DataTemplate>
+        <DataTemplate x:Key="PaladinTemplate">
+
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#f48cba" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+                </Grid>
+           
+
+        </DataTemplate>
+        <DataTemplate x:Key="HunterTemplate">
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}"  FontAttributes="Bold" TextColor="#aad372" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+                </Grid>
+        
+        </DataTemplate>
+        <DataTemplate x:Key="RogueTemplate">
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#fff468" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+                </Grid>
+          
+
+        </DataTemplate>
+        <DataTemplate x:Key="PristTemplate">
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#f0ebe0" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+
+                </Grid>
+          
+
+        </DataTemplate>
+        <DataTemplate x:Key="DeathKnightTemplate">
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#c41e3b" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+
+                </Grid>
+         
+
+        </DataTemplate>
+        <DataTemplate x:Key="ShamanTemplate">
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}"  FontAttributes="Bold" TextColor="#2359ff" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+
+                </Grid>
+          
+
+        </DataTemplate>
+        <DataTemplate x:Key="MageTemplate">
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name"  Text="{Binding Name}" FontAttributes="Bold"  TextColor="#68ccef" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+
+                </Grid>
+           
+
+        </DataTemplate>
+        <DataTemplate x:Key="WarlockTemplate">
+
+
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name" Text="{Binding Name}"  FontAttributes="Bold" TextColor="#9382c9" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+                </Grid>
+           
+
+        </DataTemplate>
+        <DataTemplate x:Key="MoncTemplate">
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}" Grid.Column="3"/>
+                <Label x:Name="name" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#00ffba" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+
+                </Grid>
+            
+
+        </DataTemplate>
+        <DataTemplate x:Key="DruidTemplate">
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#ff7c0a" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+                </Grid>
+           
+
+        </DataTemplate>
+        <DataTemplate x:Key="DemonHunterTemplate">
+            <Grid   ColumnSpacing="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="0"/>
+
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="{StaticResource Key=BAckOpacityMember}"  Grid.Column="3"/>
+                <Label x:Name="name" Text="{Binding Name}" FontAttributes="Bold"  TextColor="#a330c9" FontFamily="MORPHEUS.TTF" FontSize="Medium" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                <Label Text="{Binding Ilevel}" FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Raid}"  FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Myphicscore}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextMemberPage}"  FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center"/>
+
+
+            </Grid>
+         
+
+        </DataTemplate>
+
+
+        <local:ClassSelector x:Key="ClassSelector"
+                Warrior="{StaticResource WarriorTemplate}"
+                Paladin="{StaticResource PaladinTemplate}"
+                Hunter="{StaticResource HunterTemplate}"
+                Rogue="{StaticResource RogueTemplate}"
+                Prist="{StaticResource PristTemplate}"
+                DeathKnight="{StaticResource DeathKnightTemplate}"
+                Shaman="{StaticResource ShamanTemplate}"
+                Mage="{StaticResource MageTemplate}"
+                Warlock="{StaticResource WarlockTemplate}"
+                Monc="{StaticResource MoncTemplate}"
+                Druid="{StaticResource DruidTemplate}"
+                DemonHunter="{StaticResource DemonHunterTemplate}"
+                             
+                />
+
+    </ContentPage.Resources>
+    <StackLayout>
+        <Grid x:Name="ErrorFrame" Margin="{StaticResource PageMargin}">
+
+
+            <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+
+            <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"     >
+
+            </Label>
+            <Label x:Name="ErrorText" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="24" Margin="{StaticResource PageMargin}" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"    >
+
+            </Label>
+
+        </Grid>
+        <Grid x:Name="UpdaterGrid" Margin="{StaticResource PageMargin}">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+
+            </Grid.RowDefinitions>
+
+
+            <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+            <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="DarkRed"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+            <Label FontSize="Medium" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" Text="Немного потерпим...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"/>
+            <Label FontSize="Medium" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" Text="Получаю данные от Blizzard...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3"/>
+            <Label x:Name="Progress" FontSize="Medium" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" Text="{Binding progress}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"/>
+           
+        </Grid>
+        <Grid x:Name="MembersView" RowSpacing="5"  Margin="{StaticResource PageMargin}" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid   ColumnSpacing="1" Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="0.7"  Grid.Column="0"/>
+
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="0.7"  Grid.Column="1"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="0.7"  Grid.Column="2"/>
+                <Grid  BackgroundColor="{StaticResource BackMemberColor}" Opacity="0.7"  Grid.Column="3"/>
+                <Label Text="Name" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold"  FontSize="Small" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                <Label Text="Ilvl"  TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" FontSize="Small" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="Raid"  TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" FontSize="Small" Grid.Column="2"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label Text="RIO"    TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" FontSize="Small" Grid.Column="3"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+            </Grid>
+            <CollectionView x:Name="All_member" Grid.Row="1"
+                   
+                    SelectionMode="Single" SelectionChanged="OnSelectionChanged" ItemTemplate="{StaticResource ClassSelector}"
+                   >
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                               ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <!-- Define the appearance of each item in the list -->
+
+            </CollectionView>
+
+
+        </Grid>
+    </StackLayout>
+    <!-- <ContentPage.Content>
+        
+            
+                <dg:DataGrid x:Name="All_member" SelectionEnabled="True" SelectedItem="{Binding SelectedMember}" RowHeight="70" HeaderHeight="50"
+
+                    BorderColor="Red" HeaderBackground="DarkRed" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" ActiveRowColor="#8899AA" FontFamily="MORPHEUS.TTF" HeaderTextColor="Black" Background="Red" >
+
+                    <x:Arguments>
+
+                        <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+
+                    </x:Arguments>
+
+                    <dg:DataGrid.HeaderFontSize>
+
+                        <OnIdiom x:TypeArguments="x:Double">
+
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+
+                            <OnIdiom.Phone>12</OnIdiom.Phone>
+
+                        </OnIdiom>
+
+                    </dg:DataGrid.HeaderFontSize>
+
+                    <dg:DataGrid.Columns >
+
+                        <dg:DataGridColumn Title="Имя" PropertyName="Name" Width="*" HorizontalContentAlignment="Center"  >
+                            
+                            <dg:DataGridColumn.FormattedTitle>
+
+                                <FormattedString>
+
+                                    <Span Text="Имя" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                                </FormattedString>
+
+                            </dg:DataGridColumn.FormattedTitle>
+                            
+                        </dg:DataGridColumn>
+                <dg:DataGridColumn Title="Ранг" PropertyName="Rank" Width="50" HorizontalContentAlignment="Center" SortingEnabled="True"  >
+
+                    <dg:DataGridColumn.FormattedTitle>
+
+                        <FormattedString>
+
+                            <Span Text="Ранг" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                        </FormattedString>
+
+                    </dg:DataGridColumn.FormattedTitle>
+                </dg:DataGridColumn>
+
+                
+
+                        <dg:DataGridColumn Title="ILVL" PropertyName="Ilvl" Width="50" HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.FormattedTitle>
+
+                                <FormattedString>
+
+                                    <Span Text="ILVL" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                                </FormattedString>
+
+                            </dg:DataGridColumn.FormattedTitle>
+                        </dg:DataGridColumn>
+
+
+
+                        <dg:DataGridColumn Title="RIO" PropertyName="MythicScore" Width="*" HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.FormattedTitle>
+
+                                <FormattedString>
+
+                                    <Span Text="RIO" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                                </FormattedString>
+
+                            </dg:DataGridColumn.FormattedTitle>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn Title="Рейд" PropertyName="Raid_progress" Width="*" HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.FormattedTitle>
+
+                                <FormattedString>
+
+                                    <Span Text="Рейд" FontSize="13" TextColor="Black" FontAttributes="Bold" FontFamily="MORPHEUS.TTF"/>
+
+                                </FormattedString>
+
+                            </dg:DataGridColumn.FormattedTitle>
+                        </dg:DataGridColumn>
+               
+                    </dg:DataGrid.Columns>
+
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+
+                        <dg:PaletteCollection>
+
+                            <Color>#F2F2F2</Color>
+
+                            <Color>#FFFFFF</Color>
+
+                        </dg:PaletteCollection>
+
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+
+                </dg:DataGrid>
+            
+        
+    </ContentPage.Content> -->
+</ContentPage>

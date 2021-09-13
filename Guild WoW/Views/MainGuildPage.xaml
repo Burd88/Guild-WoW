@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     
+             
+             x:Class="Notes.Views.MainGuildPage"
+             Title=""  BackgroundImageSource="label_back" >
+    
+
+
+   
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="UpdateButton" Text="Обновить"
+                     Clicked="OnUpdateInfo"  />
+
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content >
+        
+        <StackLayout>
+            <Grid x:Name="ErrorFrame"  IsVisible="false" Margin="{StaticResource PageMargin}">
+
+
+                <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+                
+                    <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"     >
+
+                    </Label>
+                <Label x:Name="ErrorText"  Margin="{StaticResource PageMargin}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"    >
+
+                    </Label>
+                <ImageButton  x:Name="ErrorSettingsButton" Source="button" Margin="{StaticResource PageMargin}" Released="OnSettings" Grid.Row="3" BackgroundColor="Transparent">
+
+                </ImageButton>
+                <Label  x:Name="ErrorSettingslabel" Text="Settings" FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="3" FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+
+
+            </Grid>
+            <Grid x:Name="UpdaterGrid" IsVisible="false" Margin="{StaticResource PageMargin}">
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+
+                <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+                <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="DarkRed"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Немного потерпим...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Получаю данные от Blizzard...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3"/>
+                <Label x:Name="Progress" FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="{Binding progress}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"/>
+
+            </Grid>
+            <Grid x:Name="InfoGrid" Margin="{StaticResource PageMargin}" RowSpacing="5" IsVisible="false" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="170" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                       
+                    </Grid.RowDefinitions>
+
+                    
+
+
+                    
+
+                            <!--   <BoxView  x:Name="Back_Emblem"   ></BoxView> -->
+                <RelativeLayout Grid.Row="0" >
+
+                                <!--  <Image x:Name="Border" WidthRequest="147" HeightRequest="159"  RelativeLayout.XConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0.5, 
+                Constant=-75}" ></Image> -->
+                    <!--         <Image x:Name="Back"  WidthRequest="210" HeightRequest="210"  RelativeLayout.XConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0.5, 
+                Constant=-105}" RelativeLayout.YConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0, 
+                Constant=-20}" ></Image> -->
+                    <Ellipse x:Name="BackEmblem" WidthRequest="145"
+                             Fill="Red"
+         HeightRequest="145" RelativeLayout.XConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0.5, 
+                Constant=-73}" RelativeLayout.YConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0, 
+                Constant=12}"   />
+                                <Image x:Name="Emblem" WidthRequest="125" HeightRequest="125"  RelativeLayout.XConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0.5, 
+                Constant=-63}" RelativeLayout.YConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0, 
+                Constant=20}"  ></Image>
+
+                    <Image x:Name="CrestEmblem" Source="Crest_emblem"  WidthRequest="210" HeightRequest="210"  RelativeLayout.XConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0.5, 
+                Constant=-105}" RelativeLayout.YConstraint= "{ConstraintExpression 
+                Type=RelativeToParent, 
+                Property=Width,
+                Factor=0, 
+                Constant=-20}" ></Image>
+
+
+                            </RelativeLayout>
+
+
+
+
+
+                <Label x:Name="guild_Name"   FontSize="36" FontFamily="MORPHEUS.TTF" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="{StaticResource TextMainPage }"  Grid.Row="1"   />
+
+
+
+
+                <Grid Grid.Row="2" x:Name="GuildLead" >
+
+
+
+                    <!-- <Label  Text="Лидер:" HorizontalTextAlignment="End" Grid.Row="0" FontSize="Medium" TextColor="Red"  FontAttributes="Bold" VerticalTextAlignment="Center" />
+                      -->
+                    <Label x:Name="guild_leader_name" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  FontAttributes="Bold" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="{StaticResource TextMainPage }"/>
+                </Grid>
+                <Grid Grid.Row="3" x:Name="GuildMembers" >
+                        <!--        <Label  Text="Членов гильдии:" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="1"  FontAttributes="Bold" FontSize="Medium" TextColor="Red" />
+                      -->
+                    <Label x:Name="guild_members_count" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="{StaticResource TextMainPage }"/>
+                    </Grid>
+                <Grid Grid.Row="4" x:Name="GuildAcive" >
+                    <!--      <Label  Text="Основана:" HorizontalTextAlignment="End" Grid.Row="3" VerticalTextAlignment="Center"   FontAttributes="Bold"         FontSize="Medium" TextColor="Red"  />
+                     -->
+                    <Label x:Name="guild_achiv" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF"  FontSize="Medium" TextColor="{StaticResource TextMainPage }" Margin="5"/>
+                </Grid>
+                <Grid Grid.Row="5" x:Name="GuildCreated" >
+                    <!--      <Label  Text="Основана:" HorizontalTextAlignment="End" Grid.Row="3" VerticalTextAlignment="Center"   FontAttributes="Bold"         FontSize="Medium" TextColor="Red"  />
+                     -->
+                    <Label x:Name="guild_created" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF"  FontSize="Medium" TextColor="{StaticResource TextMainPage }" Margin="5"/>
+                </Grid>
+                
+                <Grid Grid.Row="6" x:Name="ServerStatus" >
+
+
+                    <Label x:Name="RealmNameLabelStart" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="1" FontFamily="MORPHEUS.TTF" FontAttributes="Bold" FontSize="28" TextColor="{StaticResource TextMainPage }"/>
+                    <Label x:Name="RealmNameLabel" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="2" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="{StaticResource TextMainPage }"/>
+                    <Image x:Name="RealmImageStatus"  Grid.Column="0" Grid.Row="3" WidthRequest="40" HeightRequest="40" />
+                    <Label x:Name="RealmStatusLabel" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="4" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="{StaticResource TextMainPage }"/>
+                    
+                </Grid>
+
+
+
+
+
+
+                <!--   <Grid Grid.Row="6" x:Name="NeedEditSettingsGr" >
+
+                    <Label  Margin="{StaticResource PageMargin}" x:Name="NeedEditSettings" FontSize="Medium" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="" />
+                </Grid>
+              <Grid Grid.Row="7" x:Name="ButtonSettings" >
+
+                    <ImageButton  x:Name="SettingsButton" Source="button" Margin="{StaticResource PageMargin}" Released="OnSettings" Grid.Row="0" BackgroundColor="Transparent">
+                   
+                </ImageButton>
+                <Label  x:Name="Settingslabel" Text="Settings" FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="0" FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid> -->
+            </Grid>
+
+        </StackLayout>
+       
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.ErrorPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Label x:Name="NameError" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="DarkSlateGray" Grid.Row="0" />
+                <Label x:Name="TextError" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red" Grid.Row="0" />
+            </Grid>
+            <Button Text="Попробовать"  />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

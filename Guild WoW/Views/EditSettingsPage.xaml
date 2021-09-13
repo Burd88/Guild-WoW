@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.EditSettingsPage" Title="Настройки" BackgroundImageSource="label_back">
+    <ContentPage.Content>
+        <StackLayout Margin="20" Spacing="20">
+            <Picker x:Name="RegionSelect" Title="Select a Region"
+        TitleColor="Black"
+        ItemsSource="{Binding LocaleValue}"
+        ItemDisplayBinding="{Binding Localization}"
+        SelectedIndexChanged="OnRegionSelectedIndexChanged" >
+                <Picker.Items>
+                    <x:String>US</x:String>
+                    <x:String>EU</x:String>
+                    <x:String>KR</x:String>
+                    <x:String>TW</x:String>
+                    <x:String>CN</x:String>
+                </Picker.Items>
+            </Picker>
+            
+
+
+            <Picker IsEnabled="False" x:Name="LocaleSelect" Title="Select a Locale"
+        TitleColor="Black"
+        ItemsSource="{Binding LocaleValue}"
+        ItemDisplayBinding="{Binding Localization}"
+        SelectedIndexChanged="OnLocaleSelectedIndexChanged" />
+            <Picker IsEnabled="False" x:Name="RealmSelect" Title="Select a Realm"
+        TitleColor="Black"
+        ItemsSource="{Binding Realm}"
+        ItemDisplayBinding="{Binding Name}"
+        SelectedIndexChanged="OnRealmSelectedIndexChanged" />
+            <Editor x:Name="GuildName" Placeholder="Enter your Guild Name"
+                Text="{Binding GuildName}"  PlaceholderColor="Black"
+                 TextColor="Black" />
+            <Button HorizontalOptions="FillAndExpand" IsEnabled="False" x:Name="SaveButton"  Text="Save"
+                    Clicked="OnSaveButtonClicked" TextColor="White">
+                
+            </Button> 
+               
+            <Label x:Name="Error"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="launcher_background">#FFFFFF</color>
+    <color name="colorPrimary">#c41e3b</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+	<color name="splash_background">#000000</color>
+	<color name="colorAccent">#FF4081</color>
+	<color name="class_warrior">#c69b6d</color>
+	<color name="class_paladin">#f48cba</color>
+	<color name="class_hunter">#aad372</color>
+	<color name="class_rogue">#fff468</color>
+	<color name="class_prist">#f0ebe0</color>
+	<color name="class_deathknight">#c41e3b</color>
+	<color name="class_shaman">#2359ff</color>
+	<color name="class_mage">#68ccef</color>
+	<color name="class_warlock">#9382c9</color>
+	<color name="class_monc">#00ffba</color>
+	<color name="class_druid">#ff7c0a</color>
+	<color name="class_demonhunter">#a330c9</color>
+</resources>

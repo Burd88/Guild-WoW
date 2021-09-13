@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.SettingsPage" Title="Настройки" BackgroundImageSource="background">
+
+        <ContentPage.ToolbarItems>
+            <ToolbarItem x:Name="AddButton" Text="Add"
+                     Clicked="OnAddClicked" />
+
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+        <!-- Display notes in a list -->
+      
+            <!-- Define the appearance of each item in the list -->
+        <Grid >
+            
+                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+            <Grid>
+                <Label Text="Регион:" HorizontalTextAlignment="Center" VerticalTextAlignment="End" Grid.Row="0"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+
+                <Label x:Name="RegionLabel" HorizontalTextAlignment="Center" Grid.Row="1" VerticalTextAlignment="Start" Text="{Binding Region}" TextColor="Black"
+                           FontSize="Medium"/>
+        </Grid>
+        </Grid>
+        <Grid >
+            <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+            <Grid>
+                <Label Text="Сервер:" HorizontalTextAlignment="Center" VerticalTextAlignment="End" Grid.Row="0"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+
+                <Label x:Name="RealmLabel" HorizontalTextAlignment="Center" Grid.Row="1" VerticalTextAlignment="Start" Text="{Binding Realm}" TextColor="Black"
+                           FontSize="Medium"/>
+            </Grid>
+        </Grid>
+        <Grid >
+
+            <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+            <Grid>
+            <Label Text="Гильдия:" HorizontalTextAlignment="Center" VerticalTextAlignment="End" Grid.Row="0"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+
+                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Row="1" Text="{Binding GuildName}"  TextColor="Black"
+                           FontSize="Medium" />
+            </Grid>
+        </Grid>
+        <Grid >
+            <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid>
+                <Label Text="Язык:" HorizontalTextAlignment="Center" VerticalTextAlignment="End" Grid.Row="0"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+
+            <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Start" Grid.Row="1" Text="{Binding Local}"
+                           TextColor="Black"
+                           FontSize="Medium" />
+            </Grid>
+        </Grid>
+        <!--        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="{StaticResource PageMargin}">
+        <Label Text="Регион:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+        <Frame BackgroundColor="Transparent" BorderColor="Brown" Grid.Row="1">
+            <Label x:Name="RegionLabel" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding Region}" TextColor="Black"
+                           FontSize="Medium"/>
+        </Frame>
+        <Label Text="Сервер:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+        <Frame BackgroundColor="Transparent" BorderColor="Brown" Grid.Row="3">
+            <Label x:Name="RealmLabel" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding Realm}" TextColor="Black"
+                           FontSize="Medium"/>
+        </Frame>
+        <Label Text="Гильдия:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+        <Frame BackgroundColor="Transparent" BorderColor="Brown" Grid.Row="5">
+            <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  Text="{Binding GuildName}"  TextColor="Black"
+                           FontSize="Medium" />
+        </Frame >
+        <Label Text="Язык:" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="6"  TextColor="DarkRed"
+                           FontSize="Medium"/>
+        <Frame BackgroundColor="Transparent" BorderColor="Brown" Grid.Row="7" > 
+            <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding Local}"
+                           TextColor="Black"
+                           FontSize="Medium" />
+        </Frame>
+    </Grid>-->
+
+    </StackLayout>
+
+</ContentPage>

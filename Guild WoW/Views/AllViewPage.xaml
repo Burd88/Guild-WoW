@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.AllViewPage" BackgroundImageSource="background.png">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid x:Name="ErrorFrame" BackgroundColor="Transparent"  Opacity="0.7" Padding="1" Margin="3" MinimumHeightRequest="100" MinimumWidthRequest="100" Grid.Row="1">
+
+
+                <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+
+                <Label x:Name="ErrorName" BackgroundColor="Gray" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"     >
+
+                </Label>
+                <Label x:Name="ErrorText" BackgroundColor="Gray" HorizontalTextAlignment="Start" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"    >
+
+                </Label>
+
+            </Grid>
+            <Grid x:Name="UpdaterGrid">
+
+
+                <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+                <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="DarkRed"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+
+            </Grid>
+            <Grid x:Name="Fullbutton" RowSpacing="15">
+                <ImageButton Source="button" Released="OpenConduit" Grid.Row="0" BackgroundColor="Transparent"/>
+                <Label Text="Медиум"   FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="0" FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+
+                <ImageButton Source="button" Released="OpenEquip" Grid.Row="1" BackgroundColor="Transparent"/>
+                <Label Text="Снаряжение" FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="1" FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+
+                <ImageButton Source="button" Released="Open_Link_Battlenet" Grid.Row="2" BackgroundColor="Transparent"/>
+                <Label Text="Battle.net" FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="2" FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+
+                <ImageButton Source="button" Released="Open_Link_WowProgress" Grid.Row="3" BackgroundColor="Transparent"/>
+                <Label Text="WowProgress" FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="3"  FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+
+                <ImageButton Source="button" Released="Open_Link_RaiderIO" Grid.Row="4" BackgroundColor="Transparent"/>
+                <Label Text="RaiderIO"  FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="4"  FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

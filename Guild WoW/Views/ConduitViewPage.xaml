@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.ConduitViewPage" BackgroundImageSource="background.png">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid x:Name="InfoGrid"  VerticalOptions="FillAndExpand">
+                <Image Source="label_back"  VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+
+                    </Grid.RowDefinitions>
+
+                    <Grid Padding="25" Margin="4" MinimumWidthRequest="100"  MinimumHeightRequest="100" Grid.Row="0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+
+                        </Grid.RowDefinitions>
+                        <Image x:Name="Image" MinimumWidthRequest="60" MinimumHeightRequest="60"></Image>
+
+                    </Grid>
+
+
+                    <Grid  Margin="4" Grid.Row="1">
+                        <Label x:Name="Name" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                    </Grid>
+
+
+                    <Grid  Margin="25" Grid.Row="2">
+                        <Label x:Name="Text" Grid.Row="0" HorizontalTextAlignment="Start" FontSize="18" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
