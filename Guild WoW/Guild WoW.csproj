@@ -7,36 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Class\class_0.jpg" />
-    <None Remove="Resources\Class\class_1.jpg" />
-    <None Remove="Resources\Class\class_10.jpg" />
-    <None Remove="Resources\Class\class_11.jpg" />
-    <None Remove="Resources\Class\class_12.jpg" />
-    <None Remove="Resources\Class\class_2.jpg" />
-    <None Remove="Resources\Class\class_3.jpg" />
-    <None Remove="Resources\Class\class_4.jpg" />
-    <None Remove="Resources\Class\class_5.jpg" />
-    <None Remove="Resources\Class\class_6.jpg" />
-    <None Remove="Resources\Class\class_7.jpg" />
-    <None Remove="Resources\Class\class_8.jpg" />
-    <None Remove="Resources\Class\class_9.jpg" />
     <None Remove="Resources\Fonts\MORPHEUS.TTF" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Class\class_0.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_1.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_10.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_11.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_12.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_2.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_3.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_4.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_5.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_6.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_7.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_8.jpg" />
-    <EmbeddedResource Include="Resources\Class\class_9.jpg" />
     <EmbeddedResource Include="Resources\Fonts\MORPHEUS.TTF" />
   </ItemGroup>
 

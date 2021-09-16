@@ -6,7 +6,7 @@
              Title="Active player"
               BackgroundImageSource="background.png" >
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Обновить"
+        <ToolbarItem x:Name="UpdateButton" Text="Обновить"
                      Clicked="OnUpdateInfo"  />
         
     </ContentPage.ToolbarItems>
@@ -834,16 +834,29 @@
 
         </Grid>
         <Grid x:Name="UpdaterGrid" Margin="{StaticResource PageMargin}">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+
+            </Grid.RowDefinitions>
 
 
             <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
             <ActivityIndicator x:Name="Updater"  
                       
-                       Color="{StaticResource TextLoadErrorPage}"  
+                       Color="DarkRed"  
                        BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+            <Label FontSize="Medium" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" Text="Немного потерпим...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"/>
+            <Label FontSize="Medium" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" Text="Получаю данные от Blizzard...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3"/>
+            <Label x:Name="Progress" FontSize="Medium" TextColor="{StaticResource TextMemberPage}" FontAttributes="Bold" Text="{Binding progress}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"/>
 
         </Grid>
-        
+
         <CollectionView x:Name="MemberView"
                     
                     SelectionMode="Single" SelectionChanged="OnSelectionChanged" ItemTemplate="{StaticResource ClassSelector}"

@@ -92,7 +92,7 @@
                       ContentTemplate="{DataTemplate views:GuildRosterPage}" />
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Состав"
+  <!--  <FlyoutItem Title="Состав"
                       Icon="icon_feed.png" >
 
         <Tab>
@@ -100,7 +100,7 @@
                   
                       ContentTemplate="{DataTemplate views:MembersPage}" />
         </Tab>
-    </FlyoutItem>
+    </FlyoutItem> -->
     <FlyoutItem Title="Активные игроки"
                       Icon="icon_feed.png" >
 

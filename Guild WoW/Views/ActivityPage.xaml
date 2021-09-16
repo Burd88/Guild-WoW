@@ -19,13 +19,13 @@
                 <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
-                   TextColor="Red"     >
+                   TextColor="{StaticResource TextLoadErrorPage}"     >
 
                 </Label>
                 <Label x:Name="ErrorText"  Margin="{StaticResource PageMargin}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
-                   TextColor="Red"    >
+                   TextColor="{StaticResource TextLoadErrorPage}"    >
 
                 </Label>
 
@@ -83,7 +83,7 @@
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>-->
-                                    <Label Text="{Binding Name}"   FontFamily="MORPHEUS.TTF" TextColor="DarkRed" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="15"/>
+                                    <Label Text="{Binding Name}"   FontFamily="MORPHEUS.TTF" TextColor="{StaticResource TextActivityPage}" FontSize="Medium" Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="15"/>
 
                                 <!--  
 

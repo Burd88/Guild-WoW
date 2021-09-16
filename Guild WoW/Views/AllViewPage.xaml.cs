@@ -69,17 +69,17 @@ namespace Notes.Views
         async void Open_Link_Battlenet(object sender, EventArgs e)
         {
             // Launch the specified URL in the system browser.
-            await Launcher.OpenAsync("https://worldofwarcraft.com/ru-ru/character/eu/howling-fjord/" + _member.ToLower());
+            await Launcher.OpenAsync("https://worldofwarcraft.com/"+App.localslug.ToLower() + "/character/"+App.region.ToLower() + "/"+ App.realslug +"/" + _member.ToLower());
         }
         async void Open_Link_WowProgress(object sender, EventArgs e)
         {
             // Launch the specified URL in the system browser.
-            await Launcher.OpenAsync("https://www.wowprogress.com/character/eu/ревущий-фьорд/" + _member.ToLower());
+            await Launcher.OpenAsync("https://www.wowprogress.com/character/" + App.region.ToLower() + "/" + App.realslug + "/" + _member.ToLower());
         }
         async void Open_Link_RaiderIO(object sender, EventArgs e)
         {
             // Launch the specified URL in the system browser.
-            await Launcher.OpenAsync("https://raider.io/characters/eu/howling-fjord/" + _member);
+            await Launcher.OpenAsync("https://raider.io/characters/" + App.region.ToLower() + "/" + App.realslug + "/" + _member);
         }
     }
 }

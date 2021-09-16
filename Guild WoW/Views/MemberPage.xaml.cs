@@ -6,6 +6,12 @@ using System.Linq;
 using System.Net;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Newtonsoft.Json;
+
+using System.IO;
+
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Notes.Views
 {
@@ -18,20 +24,170 @@ namespace Notes.Views
         {
 
             InitializeComponent();
-
-            UpdateInfo();
+            autorizations_battle_net();
 
 
 
 
         }
 
-        //     protected override void OnAppearing()
-        //    {
-        //        base.OnAppearing();
-        //       UpdateInfo();
+        private BackgroundWorker main_info_worker;
+      
+        List<Member> member = new List<Member>();
+       
+      
 
-        //   }
+        public static List<Member> users;
+        public static List<Member> usersActive;
+        string itemLVL = null;
+        string spec = null;
+        string coven = null;
+        string coven_lvl = null;
+        string coven_soul = null;
+        string last_login = null;
+        string raid_progress;
+        string mythic_score = "0.0";
+        string playing = "false";
+        string token;
+
+       
+        public void OnUpdateInfo(object sender, EventArgs e)
+        {
+
+            autorizations_battle_net();
+        }
+        public async void autorizations_battle_net()
+        {
+            Progress.Text = "0%";
+            Updater.IsRunning = true;
+            UpdaterGrid.IsVisible = true;
+            MemberView.IsVisible = false;
+            ErrorFrame.IsVisible = false;
+            UpdateButton.IsEnabled = false;
+
+
+            try
+            {
+
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.ConnectionClose = true;
+                    using (HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("POST"), "https://" + App.region + ".battle.net/oauth/token"))
+                    {
+                        string base64authorization = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("7212d3c0546e45c09fe787e81fb3830c:jLLrZT1MaHzhF8RKZO6vPopxzBjw5rCI"));
+                        request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
+
+                        request.Content = new StringContent("grant_type=client_credentials");
+                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                        HttpResponseMessage response = await httpClient.SendAsync(request);
+                        Token_for_api my_token = JsonConvert.DeserializeObject<Token_for_api>(response.Content.ReadAsStringAsync().Result);
+
+                        token = my_token.access_token;
+
+                        main_info_worker = new BackgroundWorker();
+                        main_info_worker.WorkerReportsProgress = true;
+                        main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
+                        main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
+                        main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Members_info_workerCompleted);
+                        main_info_worker.RunWorkerAsync();
+
+
+
+
+                    }
+
+                }
+
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    Updater.IsRunning = false;
+                    UpdaterGrid.IsVisible = false;
+                    MemberView.IsVisible = false;
+                    ErrorFrame.IsVisible = true;
+                    ErrorName.Text = "Ошибка";
+                    ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                }
+            }
+            catch (Exception e)
+            {
+                Updater.IsRunning = false;
+                UpdaterGrid.IsVisible = false;
+                MemberView.IsVisible = false;
+                ErrorFrame.IsVisible = true;
+                ErrorName.Text = "Ошибка";
+                ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                Console.WriteLine(e.Message);
+            }
+
+
+        }
+        public void UpdateInfo(object sender, DoWorkEventArgs e)
+        {
+            users = new List<Member>();
+
+            try
+            {
+
+
+                int i = 0;
+
+                foreach (GuildRosterMain character in App.guildRoster)
+                {
+
+                    Character_info(character.Name);
+
+
+                    if (playing == "true")
+                    {
+                        users.Add(new Member { Name = character.Name, Rank = character.Rank.ToString(), ClassString = character.Class, Class = "class_" + character.Class, Level = character.Level.ToString(), Spec = "spec_" + spec, Coven = coven, Raid = raid_progress, Myphicscore = mythic_score, Ilevel = itemLVL, InGame = last_login, NameSoul = coven_soul, Coven_lvl = coven_lvl, Active = playing });
+
+
+                    }
+                    i++;
+
+                    try
+                    {
+                        main_info_worker.ReportProgress(i * 100 / App.guildRoster.Count);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("EXSA" + ex.Message);
+                    }
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void Members_info_workerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+            users.Sort((a, b) => a.Rank.CompareTo(b.Rank));
+
+            MemberView.ItemsSource = users;
+            Title = "Персонажей: " + users.Count;
+            Updater.IsRunning = false;
+            UpdaterGrid.IsVisible = false;
+            MemberView.IsVisible = true;
+            ErrorFrame.IsVisible = false;
+            BackgroundImageSource = "label_back";
+            UpdateButton.IsEnabled = true;
+
+        }
         async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection != null)
@@ -43,181 +199,140 @@ namespace Notes.Views
 
             }
         }
-
-
-
-
-
-
-        public TimeSpan getRelativeDateTime(DateTime date)
-        {
-            TimeSpan ts = DateTime.Now - date;
-            return ts;
-
-        }
-
-        private string relative_time(DateTime date)
-        {
-            TimeSpan ts = DateTime.Now - date;
-            if (ts.TotalMinutes < 1)//seconds ago
-                return "just now";
-            if (ts.TotalHours < 1)//min ago
-                return (int)ts.TotalMinutes == 1 ? "1 Minute ago" : (int)ts.TotalMinutes + " Minutes ago";
-            if (ts.TotalDays < 1)//hours ago
-                return (int)ts.TotalHours == 1 ? "1 Hour ago" : (int)ts.TotalHours + " Hours ago";
-            if (ts.TotalDays < 30.4368)//7)//days ago
-                return (int)ts.TotalDays == 1 ? "1 Day ago" : (int)ts.TotalDays + " Days ago";
-            // if (ts.TotalDays < 30.4368)//weeks ago
-            //   return (int)(ts.TotalDays / 7) == 1 ? "1 Week ago" : (int)(ts.TotalDays / 7) + " Weeks ago";
-            // if (ts.TotalDays < 365.242)//months ago
-            //     return (int)(ts.TotalDays / 30.4368) == 1 ? "1 Month ago" : (int)(ts.TotalDays / 30.4368) + " Months ago";
-            //years ago
-            return (int)(ts.TotalDays / 365.242) == 1 ? "1 Year ago" : (int)(ts.TotalDays / 365.242) + " Years ago";
-        }
-
-        public static DateTime FromUnixTimeStampToDateTime(string unixTimeStamp) // конверстация времени
-        {
-
-            return DateTimeOffset.FromUnixTimeSeconds(long.Parse(unixTimeStamp) / 1000).LocalDateTime;
-        }
-
-        public void UpdateInfo(object sender, DoWorkEventArgs e)
-        {
-            if (MembersPage.users != null)
-            {
-                member = new List<Member>();
-                foreach (Member memb in MembersPage.users)
-                {
-
-                    if (memb.Active == "true")
-                    {
-                        member.Add(memb);
-                    }
-
-
-                }
-            }
-
-
-
-
-        }
-
-        private BackgroundWorker main_info_worker;
-        public void OnUpdateInfo(object sender, EventArgs e)
-        {
-            UpdateInfo();
-
-        }
-
-
-        public bool ServerConnect(string url)
-        {
-
-            Uri uri = new Uri(url);
-            try
-            {
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-
-                HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                httpWebRequest.Abort();
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
-        public void UpdateInfo()
-        {
-            if (App.guild_name != null)
-            {
-                BackgroundImageSource = "label_back";
-                Updater.IsRunning = true;
-                UpdaterGrid.IsVisible = true;
-                MemberView.IsVisible = false;
-                ErrorFrame.IsVisible = false;
-
-
-
-                main_info_worker = new BackgroundWorker();
-                main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
-                main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Member_info_workerCompleted);
-                main_info_worker.RunWorkerAsync();
-
-
-
-            }
-            else
-            {
-                Updater.IsRunning = false;
-                UpdaterGrid.IsVisible = false;
-                MemberView.IsVisible = false;
-                ErrorFrame.IsVisible = true;
-
-                ErrorName.Text = "Ошибка";
-                ErrorText.Text = "Dont guild data";
-            }
-
-        }
-        List<Member> member = new List<Member>();
-        private void Member_info_workerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //  if (!dontDB)
-            //  {
-
-            member.Sort((a, b) => a.Rank.CompareTo(b.Rank));
-            Title = "Активных игроков: " + member.Count.ToString();
-            MemberView.ItemsSource = member;
-            Updater.IsRunning = false;
-            UpdaterGrid.IsVisible = false;
-            MemberView.IsVisible = true;
-            ErrorFrame.IsVisible = false;
-            BackgroundImageSource = "background";
-            /*   }
-
-               else
-               {
-                   Updater.IsRunning = false;
-                   UpdaterGrid.IsVisible = false;
-                   MemberView.IsVisible = false;
-                   ErrorFrame.IsVisible = true;
-
-                   ErrorName.Text = "Ошибка";
-                   ErrorText.Text = App.textError;
-               }*/
-        }
-        public void Update()
+        void ProgressUpdater(object sender, ProgressChangedEventArgs e)
         {
             try
             {
-                member = new List<Member>();
-                foreach (Member memb in MembersPage.users)
-                {
-
-                    if (memb.Active == "true")
-                    {
-                        member.Add(memb);
-                    }
-                }
-
-                member.Sort((a, b) => a.Rank.CompareTo(b.Rank));
-                Title = "Активных игроков: " + member.Count.ToString();
-                MemberView.ItemsSource = member;
-                Updater.IsRunning = false;
-                UpdaterGrid.IsVisible = false;
-                MemberView.IsVisible = true;
-                ErrorFrame.IsVisible = false;
-                BackgroundImageSource = "background";
-
-
+                Progress.Text = e.ProgressPercentage.ToString() + "%";
+                //ProgressBar.Progress = e.ProgressPercentage;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("EXEPT" + ex.Message);
+                Console.WriteLine("EXSA" + ex.Message);
             }
+            // The progress percentage is a property of e
+
+        }
+        private void Character_info(string name)
+        {
+
+            try
+            {
+                WebRequest requestchar = WebRequest.Create("https://" + App.region + ".api.blizzard.com/profile/wow/character/" + App.realslug + "/" + name.ToLower() + "?namespace=profile-" + App.region + "&locale=" + App.localslug + "&access_token=" + token);
+
+                WebResponse responcechar = requestchar.GetResponse();
+
+                using (Stream stream1 = responcechar.GetResponseStream())
+
+                {
+                    using (StreamReader reader1 = new StreamReader(stream1))
+                    {
+                        string line = "";
+                        while ((line = reader1.ReadLine()) != null)
+                        {
+                            Root_charackter_full_info character = JsonConvert.DeserializeObject<Root_charackter_full_info>(line);
+                            if (Convert.ToInt32(Functions.getRelativeDateTime(Functions.FromUnixTimeStampToDateTime(character.last_login_timestamp.ToString())).TotalDays) <= 14)
+                            {
+                                playing = "true";
+
+                                if (character.equipped_item_level.ToString() == "error")
+                                {
+                                    itemLVL = "0";
+                                }
+                                else
+                                {
+                                    itemLVL = character.equipped_item_level.ToString();
+                                }
 
 
+                                spec = character.active_spec.id.ToString();
+                                last_login = Functions.relative_time(Functions.FromUnixTimeStampToDateTime(character.last_login_timestamp.ToString()));
+                                if (line.Contains("\"covenant_progress\":"))
+                                {
+                                    coven = "coven_" + character.covenant_progress.chosen_covenant.id.ToString();
+                                    coven_lvl = character.covenant_progress.renown_level.ToString();
+                                }
+
+                                else
+                                {
+                                    coven = "0";
+                                    coven_lvl = "0";
+                                    coven_soul = "нет";
+
+                                }
+                                Character_raid_progress(character.name);
+                            }
+                            else
+                            {
+                                playing = "false";
+                            }
+                        }
+                    }
+                }
+                responcechar.Close();
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    itemLVL = "0";
+                    spec = "0";
+                    coven = "0";
+                    coven_lvl = "0";
+                    coven_soul = "нет";
+                    last_login = "0";
+                }
+            }
+            catch (Exception e)
+            {
+                itemLVL = "error";
+                spec = "0";
+                coven = "0";
+                coven_lvl = "0";
+                coven_soul = "нет";
+                last_login = "0";
+                Console.WriteLine(e.Message);
+            }
+        }
+        private void Character_raid_progress(string name)
+        {
+
+            try
+            {
+                WebRequest requestchar = WebRequest.Create("https://raider.io/api/v1/characters/profile?region=" + App.region + "&realm=" + App.realslug + "&name=" + name + "&fields=mythic_plus_scores%2Craid_progression");
+
+                WebResponse responcechar = requestchar.GetResponse();
+
+                using (Stream stream1 = responcechar.GetResponseStream())
+
+                {
+                    using (StreamReader reader1 = new StreamReader(stream1))
+                    {
+                        string line = "";
+                        while ((line = reader1.ReadLine()) != null)
+                        {
+                            RaiderIO_info character = JsonConvert.DeserializeObject<RaiderIO_info>(line);
+                            raid_progress = character.raid_progression.CastleNathria.summary;
+                            mythic_score = character.mythic_plus_scores.all;
+                        }
+                    }
+                }
+                responcechar.Close();
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    raid_progress = "0/0";
+                    mythic_score = "0.0";
+                }
+            }
+            catch (Exception e)
+            {
+                raid_progress = "0/0";
+                mythic_score = "0.0";
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

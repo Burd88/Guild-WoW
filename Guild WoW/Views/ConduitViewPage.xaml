@@ -28,12 +28,17 @@
 
 
                     <Grid  Margin="4" Grid.Row="1">
-                        <Label x:Name="Name" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                        <Label x:Name="Name" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" TextColor="Black" ></Label>
+                    </Grid>
+                    <Grid  Margin="4" Grid.Row="2">
+                        <Label x:Name="Level" Grid.Row="0" HorizontalTextAlignment="Center" FontSize="20" FontFamily="MORPHEUS.TTF" TextColor="DarkSlateGray" ></Label>
                     </Grid>
 
-
-                    <Grid  Margin="25" Grid.Row="2">
-                        <Label x:Name="Text" Grid.Row="0" HorizontalTextAlignment="Start" FontSize="18" FontFamily="MORPHEUS.TTF" TextColor="Red" ></Label>
+                    <Grid  Margin="50" Grid.Row="3">
+                        <Label x:Name="Description" Grid.Row="0" HorizontalTextAlignment="Start" FontSize="18" FontFamily="MORPHEUS.TTF" TextColor="Black" ></Label>
+                    </Grid>
+                    <Grid  Margin="25" Grid.Row="4">
+                        <Label x:Name="CastTime" Grid.Row="0"  FontSize="16" FontFamily="MORPHEUS.TTF" TextColor="black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" ></Label>
                     </Grid>
                 </Grid>
             </Grid>

@@ -23,6 +23,7 @@
         <Color x:Key="TextMemberActivePage">Black</Color>
         <Color x:Key="TextLoadErrorPage">Black</Color>
         <Color x:Key="TextLogsPage">DarkSlateGray</Color>
+        <Color x:Key="TextActivityPage">DarkSlateGray</Color>
         
 
 

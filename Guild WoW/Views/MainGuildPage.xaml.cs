@@ -85,66 +85,11 @@ namespace Notes.Views
 
       
 
-        [Obsolete]
-        public void UpdateInfo(object sender, DoWorkEventArgs e)
-        {
-            GuildUpdateFuncton();
-            RealmUpdateFunction();
-        }
+      
      
 
-        [Obsolete]
-        private void Main_info_workerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
 
-            guild_Name.Text = guildName;
-            if (guildFaction == "HORDE")
-            {
-                guild_Name.TextColor = Color.DarkRed;
-            }
-            else
-            {
-                guild_Name.TextColor = Color.Blue;
-            }
-            guild_leader_name.Text = AppResources.LiderText + guildLeader;
-
-            guild_members_count.Text = AppResources.GuildMemberText + memberCount;
-            guild_achiv.Text = AppResources.GuldAchivText + guildAchiv;
-            guild_created.Text = AppResources.GuildCreateText + Functions.FromUnixTimeStampToDateTime(guildTimeCreate.ToString()).ToString();
-            BackEmblem.Fill = new SolidColorBrush(Color.FromRgb(emblemColorRed, emblemColorGreen, emblemColorBlue));
-
-
-
-
-            Emblem.Source = ImageSource.FromStream(() => new MemoryStream(emblemByte));
-
-
-            Updater.IsRunning = false;
-            UpdaterGrid.IsVisible = false;
-            InfoGrid.IsVisible = true;
-            ErrorFrame.IsVisible = false;
-            UpdateButton.IsEnabled = true;
-            RealmNameLabelStart.Text = AppResources.RealStatuslabelText;
-            RealmNameLabel.Text = guild.Realm;
-            if (realmstatus == "UP")
-            {
-                RealmImageStatus.Source = "RealmOk";
-                RealmStatusLabel.Text = AppResources.RealmStatusUp;
-                RealmStatusLabel.TextColor = Color.Green;
-            }
-            else
-            {
-                RealmImageStatus.Source = "RealmFalse";
-                RealmStatusLabel.TextColor = Color.Red;
-            }
-
-
-        }
-
-        [Obsolete]
-
-
-        private BackgroundWorker main_info_worker;
+       
         public void OnUpdateInfo(object sender, EventArgs e)
         {
 
@@ -160,23 +105,10 @@ namespace Notes.Views
         }
 
 
-        void ProgressUpdater(object sender, ProgressChangedEventArgs e)
-        {
-            try
-            {
-                Progress.Text = e.ProgressPercentage.ToString() + "%";
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("EXSA" + ex.Message);
-            }
 
 
-        }
 
-
-        
+        private BackgroundWorker main_info_worker;
 
         [Obsolete]
         public async void AutorizationsBattleNet()
@@ -248,8 +180,77 @@ namespace Notes.Views
 
 
         }
+        [Obsolete]
+        public void UpdateInfo(object sender, DoWorkEventArgs e)
+        {
+            GuildUpdateFuncton();
+            RealmUpdateFunction();
+        }
 
         [Obsolete]
+        private void Main_info_workerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+            guild_Name.Text = guildName;
+            if (guildFaction == "HORDE")
+            {
+                guild_Name.TextColor = Color.DarkRed;
+            }
+            else
+            {
+                guild_Name.TextColor = Color.Blue;
+            }
+            guild_leader_name.Text = AppResources.LiderText + guildLeader;
+
+            guild_members_count.Text = AppResources.GuildMemberText + memberCount;
+            guild_achiv.Text = AppResources.GuldAchivText + guildAchiv;
+            guild_created.Text = AppResources.GuildCreateText + Functions.FromUnixTimeStampToDateTime(guildTimeCreate.ToString()).ToString();
+            BackEmblem.Fill = new SolidColorBrush(Color.FromRgb(emblemColorRed, emblemColorGreen, emblemColorBlue));
+
+
+
+
+            Emblem.Source = ImageSource.FromStream(() => new MemoryStream(emblemByte));
+
+
+            Updater.IsRunning = false;
+            UpdaterGrid.IsVisible = false;
+            InfoGrid.IsVisible = true;
+            ErrorFrame.IsVisible = false;
+            UpdateButton.IsEnabled = true;
+            RealmNameLabelStart.Text = AppResources.RealStatuslabelText;
+            RealmNameLabel.Text = guild.Realm;
+            if (realmstatus == "UP")
+            {
+                RealmImageStatus.Source = "RealmOk";
+                RealmStatusLabel.Text = AppResources.RealmStatusUp;
+                RealmStatusLabel.TextColor = Color.Green;
+            }
+            else
+            {
+                RealmImageStatus.Source = "RealmFalse";
+                RealmStatusLabel.TextColor = Color.Red;
+            }
+
+
+        }
+
+        [Obsolete]
+
+        void ProgressUpdater(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+                Progress.Text = e.ProgressPercentage.ToString() + "%";
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("EXSA" + ex.Message);
+            }
+
+
+        }
         void GuildUpdateFuncton()
         {
             guildcountMembers = 0;

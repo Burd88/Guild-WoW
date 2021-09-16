@@ -1,10 +1,16 @@
 ﻿using System;
-using System.IO;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+using Newtonsoft.Json;
+using Notes.Models;
+
+using System.ComponentModel;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 namespace Notes.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    
     [QueryProperty(nameof(LoadID), nameof(LoadID))]
     public partial class ConduitViewPage : ContentPage
     {
@@ -15,25 +21,20 @@ namespace Notes.Views
             {
 
 
-                if (value.Contains(","))
+                if (value.Contains("Conduit"))
                 {
-                    if (value.Contains("head") || value.Contains("hands") || value.Contains("neck") || value.Contains("waist") || value.Contains("shoulder") || value.Contains("legs") || value.Contains("back") ||
-                        value.Contains("feet") || value.Contains("chest") || value.Contains("finger2") || value.Contains("shirt") || value.Contains("finger2") || value.Contains("tabard") || value.Contains("trinket1") ||
-                        value.Contains("wrist") || value.Contains("trinket2") || value.Contains("main_hand") || value.Contains("off_hand"))
-                    {
-                        string[] str = value.Split(new char[] { ',' });
-                        insert_discription_item(str[0], str[1]);
-                    }
-                    else
-                    {
-                        string[] str = value.Split(new char[] { ',' });
-                        insert_discription(str[0], str[1]);
-                    }
-
+                    
+                   string settings = value.Replace("Conduit", "");
+                    string[] str = settings.Split(new char[] { ',' });
+                    
+                    GetConduitInfo(str[0], str[1], str[2], str[3]);
                 }
-                else
+                else if (value.Contains("TechTalent"))
                 {
-                    insert_discription(value);
+                    string settings = value.Replace("TechTalent", "");
+                    string[] str = settings.Split(new char[] { ',' });
+
+                    GetTeshTalentInfo(str[0], str[1]);
                 }
 
                 // LoadMember(value);
@@ -44,67 +45,271 @@ namespace Notes.Views
             InitializeComponent();
         }
 
-        public void insert_discription(string id)
+        void GetTeshTalentInfo(string id, string token)
         {
-            //   DataRow[] rows = App.techtalent_table.Select();
 
-            // for (int i = 0; i < rows.Length; i++)
-            // {
-            //     if (rows[i]["id"].ToString() == id)
-            //     {
-            //        Name.Text = rows[i]["название"].ToString();
-            //         Text.Text = rows[i]["описание"].ToString() + "\n" + rows[i]["cast_time"].ToString();
-            //          Title = rows[i]["название"].ToString();
-            //         Image.Source = "tesh_talent_" + id;
-            //     }
-            //  }
 
-        }
-        public void insert_discription_item(string slot, string name)
-        {
-            //DataRow[] rows;//= App.equipinfo.Select();
-
-            // for (int i = 0; i < rows.Length; i++)
-            // {
-
-            //      if (rows[i]["name"].ToString() == name)
-            //       {
-
-            //       Text.Text = rows[i][slot + "_tooltip"].ToString();
-            //       Name.IsVisible = false;
-            //       Image.Source = Imagereturn(rows[i][slot + "_id"]);
-            //   }
-            // }
-
-        }
-
-        public ImageSource Imagereturn(object obj)
-        {
             try
             {
-                return ImageSource.FromStream(() => new MemoryStream((byte[])obj));
+                WebRequest request = WebRequest.Create("https://"+ App.region.ToLower() +".api.blizzard.com/data/wow/tech-talent/"+ id +"?namespace=static-eu" + "&locale=" + App.localslug + "&access_token=" + token);
+                WebResponse responce = request.GetResponse();
+
+                using (Stream stream = responce.GetResponseStream())
+
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+
+
+
+                            TechTalent techTalent = JsonConvert.DeserializeObject<TechTalent>(line);
+                            Name.Text = techTalent.spell_tooltip.spell.name;
+                            Description.Text = techTalent.spell_tooltip.description;
+                            Level.Text = "";
+                            CastTime.Text = techTalent.spell_tooltip.cast_time;
+
+                            GetTeshTalentMedia(techTalent.media.key.href , token);
+
+
+
+
+                        }
+                    }
+                }
+                responce.Close();
             }
-            catch (Exception ex)
+            catch (WebException er)
             {
-                Console.WriteLine(ex.Message);
-                return null;
+                if (er.Status == WebExceptionStatus.ProtocolError)
+                {
+
+                }
             }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+
 
         }
-        public void insert_discription(string id, string rank)
-        {
-            // DataRow[] rows = App.conduit_table.Select();
 
-            //  for (int i = 0; i < rows.Length; i++)
-            //  {
-            //      if (rows[i]["id"].ToString() == id)
-            //     {
-            //        Name.Text = rows[i]["name"].ToString();
-            //        Text.Text = rows[i][rank].ToString() + "\n" + rows[i]["cast_time"].ToString();
-            //         Title = rows[i]["name"].ToString();
-            //        Image.Source = "counduit_" + id;
-            //     }
-            // }
+        void GetTeshTalentMedia(string link, string token)
+        {
+
+
+            WebClient dl = new WebClient();
+            try
+            {
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebResponse responce = request.GetResponse();
+
+                using (Stream stream = responce.GetResponseStream())
+
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+
+
+
+                            TechTalentMedia techTalent = JsonConvert.DeserializeObject<TechTalentMedia>(line);
+
+                            foreach (AssetTTMedia asst in techTalent.assets)
+                            {
+
+
+                                byte[] dl_trait;
+                                dl_trait = dl.DownloadData(asst.value);
+                                Image.Source = ImageSource.FromStream(() => new MemoryStream(dl_trait));
+
+                            }
+
+
+
+
+                        }
+                    }
+                }
+                responce.Close();
+            }
+            catch (WebException er)
+            {
+                if (er.Status == WebExceptionStatus.ProtocolError)
+                {
+
+                }
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+
+
+        }
+
+        void GetConduitInfo(string id, string rank, string lvl, string token)
+        {
+
+
+            try
+            {
+                WebRequest request = WebRequest.Create("https://"+ App.region.ToLower() + ".api.blizzard.com/data/wow/covenant/conduit/"+ id + "?namespace=static-" + App.region.ToLower() + "&locale=" + App.localslug + "&access_token=" + token);
+                WebResponse responce = request.GetResponse();
+
+                using (Stream stream = responce.GetResponseStream())
+
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            
+
+                            Conduit conduit = JsonConvert.DeserializeObject<Conduit>(line);
+                            foreach(RankConduit ranks in conduit.ranks)
+                            {
+                                if (ranks.tier == Convert.ToInt32(rank) - 1)
+                                {
+                                    Name.Text = ranks.spell_tooltip.spell.name;
+                                    Level.Text = lvl;
+                                    Description.Text = ranks.spell_tooltip.description;
+                                    CastTime.Text = ranks.spell_tooltip.cast_time;
+                                    GetConduitItem(conduit.item.key.href , token);
+                                }
+                            }
+
+                            
+
+
+
+
+                        }
+                    }
+                }
+                responce.Close();
+            }
+            catch (WebException er)
+            {
+                if (er.Status == WebExceptionStatus.ProtocolError)
+                {
+
+                }
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+
+
+        }
+
+        void GetConduitItem(string link, string token)
+        {
+
+
+
+            try
+            {
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebResponse responce = request.GetResponse();
+
+                using (Stream stream = responce.GetResponseStream())
+
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+
+
+
+                            GetItem item = JsonConvert.DeserializeObject<GetItem>(line);
+
+                            GetConduitMedia(item.media.key.href , token);
+
+
+
+
+
+
+                        }
+                    }
+                }
+                responce.Close();
+            }
+            catch (WebException er)
+            {
+                if (er.Status == WebExceptionStatus.ProtocolError)
+                {
+
+                }
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+        }
+
+        void GetConduitMedia(string link , string token )
+        {
+
+
+            WebClient dl = new WebClient();
+            try
+            {
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebResponse responce = request.GetResponse();
+
+                using (Stream stream = responce.GetResponseStream())
+
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+
+
+
+                            ItemMedia techTalent = JsonConvert.DeserializeObject<ItemMedia>(line);
+
+                            foreach (AssetItemMedia asst in techTalent.assets)
+                            {
+                                
+                                    byte[] dl_trait;
+                                    dl_trait = dl.DownloadData(asst.value);
+                                    Image.Source = ImageSource.FromStream(() => new MemoryStream(dl_trait));
+
+                            }
+
+
+
+
+
+                        }
+                    }
+                }
+                responce.Close();
+            }
+            catch (WebException er)
+            {
+                if (er.Status == WebExceptionStatus.ProtocolError)
+                {
+
+                }
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+
 
         }
     }

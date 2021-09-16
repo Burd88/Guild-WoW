@@ -34,7 +34,7 @@ namespace Notes
         public static string realslug;
         public static string localslug;
         public static string realmId;
-
+        public static string lungSlug;
         public static List<GuildRosterMain> guildRoster;
         public static string server_status;
         public static bool isError;
