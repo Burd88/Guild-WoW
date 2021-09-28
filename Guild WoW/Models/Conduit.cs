@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Notes.Models
 {
@@ -63,5 +61,5 @@ namespace Notes.Models
         public SocketTypeConduit socket_type { get; set; }
         public List<RankConduit> ranks { get; set; }
     }
-    
+
 }

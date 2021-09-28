@@ -1,17 +1,13 @@
-﻿using Notes.Models;
+﻿using Newtonsoft.Json;
+using Notes.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Newtonsoft.Json;
-
-using System.IO;
-
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace Notes.Views
 {
@@ -24,7 +20,7 @@ namespace Notes.Views
         {
 
             InitializeComponent();
-            autorizations_battle_net();
+            GetActiveMembers();
 
 
 
@@ -32,10 +28,10 @@ namespace Notes.Views
         }
 
         private BackgroundWorker main_info_worker;
-      
+
         List<Member> member = new List<Member>();
-       
-      
+
+
 
         public static List<Member> users;
         public static List<Member> usersActive;
@@ -48,16 +44,17 @@ namespace Notes.Views
         string raid_progress;
         string mythic_score = "0.0";
         string playing = "false";
-        string token;
+        
 
-       
+
         public void OnUpdateInfo(object sender, EventArgs e)
         {
 
-            autorizations_battle_net();
+            GetActiveMembers();
         }
-        public async void autorizations_battle_net()
+        public void GetActiveMembers()
         {
+            BackgroundImageSource = "Label_back";
             Progress.Text = "0%";
             Updater.IsRunning = true;
             UpdaterGrid.IsVisible = true;
@@ -69,35 +66,19 @@ namespace Notes.Views
             try
             {
 
-                using (HttpClient httpClient = new HttpClient())
-                {
-                    httpClient.DefaultRequestHeaders.ConnectionClose = true;
-                    using (HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("POST"), "https://" + App.region + ".battle.net/oauth/token"))
-                    {
-                        string base64authorization = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("7212d3c0546e45c09fe787e81fb3830c:jLLrZT1MaHzhF8RKZO6vPopxzBjw5rCI"));
-                        request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
 
-                        request.Content = new StringContent("grant_type=client_credentials");
-                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
-                        HttpResponseMessage response = await httpClient.SendAsync(request);
-                        Token_for_api my_token = JsonConvert.DeserializeObject<Token_for_api>(response.Content.ReadAsStringAsync().Result);
-
-                        token = my_token.access_token;
-
-                        main_info_worker = new BackgroundWorker();
-                        main_info_worker.WorkerReportsProgress = true;
-                        main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
-                        main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
-                        main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Members_info_workerCompleted);
-                        main_info_worker.RunWorkerAsync();
+                main_info_worker = new BackgroundWorker();
+                main_info_worker.WorkerReportsProgress = true;
+                main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
+                main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
+                main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Members_info_workerCompleted);
+                main_info_worker.RunWorkerAsync();
 
 
 
 
-                    }
 
-                }
 
             }
             catch (WebException e)
@@ -180,6 +161,7 @@ namespace Notes.Views
 
             MemberView.ItemsSource = users;
             Title = "Персонажей: " + users.Count;
+            BackgroundImageSource = "background.png";
             Updater.IsRunning = false;
             UpdaterGrid.IsVisible = false;
             MemberView.IsVisible = true;
@@ -194,7 +176,7 @@ namespace Notes.Views
             {
                 // Navigate to the NoteEntryPage, passing the filename as a query parameter.
                 Member note = (Member)e.CurrentSelection.FirstOrDefault();
-
+                App.viewMember = note.Name;
                 await Shell.Current.GoToAsync($"{nameof(AllViewPage)}?{nameof(AllViewPage.LoadName)}={note.Name}");
 
             }
@@ -218,7 +200,7 @@ namespace Notes.Views
 
             try
             {
-                WebRequest requestchar = WebRequest.Create("https://" + App.region + ".api.blizzard.com/profile/wow/character/" + App.realslug + "/" + name.ToLower() + "?namespace=profile-" + App.region + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest requestchar = WebRequest.Create("https://" + App.region + ".api.blizzard.com/profile/wow/character/" + App.realslug + "/" + name.ToLower() + "?namespace=profile-" + App.region + "&locale=" + App.localslug + "&access_token=" + App.token);
 
                 WebResponse responcechar = requestchar.GetResponse();
 
@@ -231,7 +213,7 @@ namespace Notes.Views
                         while ((line = reader1.ReadLine()) != null)
                         {
                             Root_charackter_full_info character = JsonConvert.DeserializeObject<Root_charackter_full_info>(line);
-                            if (Convert.ToInt32(Functions.getRelativeDateTime(Functions.FromUnixTimeStampToDateTime(character.last_login_timestamp.ToString())).TotalDays) <= 14)
+                            if (Convert.ToInt32(Functions.getRelativeDateTime(Functions.FromUnixTimeStampToDateTime(character.last_login_timestamp.ToString())).TotalDays) <= 7)
                             {
                                 playing = "true";
 

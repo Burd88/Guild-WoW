@@ -1,14 +1,10 @@
-﻿using System;
-using Xamarin.Forms;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Notes.Models;
-
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-
+using Xamarin.Forms;
 using Color = Xamarin.Forms.Color;
 namespace Notes.Views
 {
@@ -18,17 +14,9 @@ namespace Notes.Views
         string _member = "";
         public string LoadName
         {
-            set
-            {
-
-                _member = value;
-               
-                // LoadMember(value);
-            }
+            set => _member = value;// LoadMember(value);
         }
-        string[] teh_talents = null;
-        string[] conduits = null;
-        string[] conduits_rank = null;
+
         #region Button
         async void Conduit1Relesed(object sender, EventArgs e)
         {
@@ -39,8 +27,9 @@ namespace Notes.Views
                 {
                     await Shell.Current.GoToAsync($"{nameof(ConduitViewPage)}?{nameof(ConduitViewPage.LoadID)}={conduit1view}");
                 }
-               
-            }catch (Exception x)
+
+            }
+            catch (Exception x)
             {
                 Console.WriteLine(x.Message);
             }
@@ -228,10 +217,11 @@ namespace Notes.Views
             }
         }
         #endregion
+        [Obsolete]
         public ConduitPage()
         {
             InitializeComponent();
-            AutorizationsBattleNet();
+            GetConduitAllInfo();
         }
 
         private string GetConduitLevel(string rank)
@@ -279,13 +269,13 @@ namespace Notes.Views
 
 
 
-        private string token;
+
         private BackgroundWorker main_info_worker;
 
         [Obsolete]
-        public async void AutorizationsBattleNet()
+        public void GetConduitAllInfo()
         {
-            
+
             Updater.IsRunning = true;
             UpdaterGrid.IsVisible = true;
             InfoGrid.IsVisible = false;
@@ -296,36 +286,18 @@ namespace Notes.Views
             try
             {
 
-                using (HttpClient httpClient = new HttpClient())
-                {
-                    httpClient.DefaultRequestHeaders.ConnectionClose = true;
-                    using (HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("POST"), "https://" + App.region + ".battle.net/oauth/token"))
-                    {
-                        string base64authorization = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("5adf246bde3d4a41a3792c229a6e425c:sBbit3bF6v0hSUzpPDPJIzy36dZhVwFq"));
-                        request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
 
-                        request.Content = new StringContent("grant_type=client_credentials");
-                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+                main_info_worker = new BackgroundWorker();
 
-                        HttpResponseMessage response = await httpClient.SendAsync(request);
-                        Token_for_api my_token = JsonConvert.DeserializeObject<Token_for_api>(response.Content.ReadAsStringAsync().Result);
-
-                        token = my_token.access_token;
-                       
-                           main_info_worker = new BackgroundWorker();
-
-                          main_info_worker.WorkerReportsProgress = true;
-                          main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
-                           main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
-                           main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Main_info_workerCompleted);
-                          main_info_worker.RunWorkerAsync();
+                main_info_worker.WorkerReportsProgress = true;
+                main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
+                main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
+                main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Main_info_workerCompleted);
+                main_info_worker.RunWorkerAsync();
 
 
 
 
-                    }
-
-                }
 
             }
             catch (WebException e)
@@ -358,7 +330,7 @@ namespace Notes.Views
         {
 
             GetSoulbindsCharacter();
-          
+
         }
 
         [Obsolete]
@@ -392,7 +364,7 @@ namespace Notes.Views
             InfoGrid.IsVisible = true;
             ErrorFrame.IsVisible = false;
             UpdateButton.IsEnabled = true;
-          
+
 
 
         }
@@ -474,12 +446,12 @@ namespace Notes.Views
             conduit5lvl = null;
             conduit6lvl = null;
 
-            
+
             try
             {
-                WebRequest request = WebRequest.Create("https://" + App.region.ToLower() + ".api.blizzard.com/profile/wow/character/" + App.realslug + "/" + _member.ToLower()+  "/soulbinds?namespace=profile-" + App.region.ToLower() + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create("https://" + App.region.ToLower() + ".api.blizzard.com/profile/wow/character/" + App.realslug + "/" + App.viewMember.ToLower() + "/soulbinds?namespace=profile-" + App.region.ToLower() + "&locale=" + App.localslug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
-                
+
                 using (Stream stream = responce.GetResponseStream())
 
                 {
@@ -489,7 +461,7 @@ namespace Notes.Views
                         while ((line = reader.ReadLine()) != null)
                         {
 
-                           
+
 
                             CharacterSoulbindsAll allSoulbinds = JsonConvert.DeserializeObject<CharacterSoulbindsAll>(line);
                             foreach (SoulbindSoulbinds soulbinds in allSoulbinds.soulbinds)
@@ -499,12 +471,13 @@ namespace Notes.Views
                                 {
                                     nameSoul = soulbinds.soulbind.name;
                                     covenName = allSoulbinds.chosen_covenant.name;
-                                    if(allSoulbinds.chosen_covenant.id == 1)
+                                    if (allSoulbinds.chosen_covenant.id == 1)
                                     {
                                         covenColor = Color.FromRgb(105, 204, 240);
-                                    }else if (allSoulbinds.chosen_covenant.id == 2)
+                                    }
+                                    else if (allSoulbinds.chosen_covenant.id == 2)
                                     {
-                                        
+
                                         covenColor = Color.FromRgb(196, 31, 59);
                                     }
                                     else if (allSoulbinds.chosen_covenant.id == 3)
@@ -515,7 +488,7 @@ namespace Notes.Views
                                     {
                                         covenColor = Color.FromRgb(171, 212, 115);
                                     }
-                                    
+
                                     foreach (TraitSoulbinds traits in soulbinds.traits)
                                     {
                                         if (traits.trait != null)
@@ -523,28 +496,28 @@ namespace Notes.Views
                                             if (trait1 == null)
                                             {
 
-                                                tt1view = "TechTalent" + traits.trait.id + "," +token;
+                                                tt1view = "TechTalent" + traits.trait.id + "," + App.token;
 
                                             }
                                             else if (trait2 == null)
                                             {
-                                                tt2view = "TechTalent" + traits.trait.id + "," +token;
+                                                tt2view = "TechTalent" + traits.trait.id + "," + App.token;
                                             }
                                             else if (trait3 == null)
                                             {
-                                                tt3view = "TechTalent" + traits.trait.id + "," +token;
+                                                tt3view = "TechTalent" + traits.trait.id + "," + App.token;
                                             }
                                             else if (trait4 == null)
                                             {
-                                                tt4view = "TechTalent" + traits.trait.id + "," +token;
+                                                tt4view = "TechTalent" + traits.trait.id + "," + App.token;
                                             }
                                             else if (trait5 == null)
                                             {
-                                                tt5view = "TechTalent" + traits.trait.id + "," +token;
+                                                tt5view = "TechTalent" + traits.trait.id + "," + App.token;
                                             }
                                             else if (trait6 == null)
                                             {
-                                                tt6view = "TechTalent" + traits.trait.id + "," + token;
+                                                tt6view = "TechTalent" + traits.trait.id + "," + App.token;
                                             }
                                             GetTeshTalentInfo(traits.trait.key.href);
 
@@ -552,44 +525,44 @@ namespace Notes.Views
                                         }
                                         else if (traits.conduit_socket != null)
                                         {
-                                            
+
                                             GetConduitInfo(traits.conduit_socket.socket.conduit.key.href);
                                             if (conduit1lvl == null)
                                             {
 
-                                              
+
                                                 conduit1lvl = GetConduitLevel(traits.conduit_socket.socket.rank.ToString());
-                                                conduit1view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit1lvl + "," + token;
+                                                conduit1view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit1lvl + "," + App.token;
                                             }
                                             else if (conduit2lvl == null)
                                             {
-                                               
+
                                                 conduit2lvl = GetConduitLevel(traits.conduit_socket.socket.rank.ToString());
-                                                conduit2view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit2lvl + "," + token;
+                                                conduit2view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit2lvl + "," + App.token;
                                             }
                                             else if (conduit3lvl == null)
                                             {
-                                               
+
                                                 conduit3lvl = GetConduitLevel(traits.conduit_socket.socket.rank.ToString());
-                                                conduit3view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit3lvl + "," + token;
+                                                conduit3view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit3lvl + "," + App.token;
                                             }
                                             else if (conduit4lvl == null)
                                             {
-                                                
+
                                                 conduit4lvl = GetConduitLevel(traits.conduit_socket.socket.rank.ToString());
-                                                conduit4view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit4lvl + "," + token;
+                                                conduit4view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit4lvl + "," + App.token;
                                             }
                                             else if (conduit5lvl == null)
                                             {
-                                                
+
                                                 conduit5lvl = GetConduitLevel(traits.conduit_socket.socket.rank.ToString());
-                                                conduit5view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit5lvl + "," + token;
+                                                conduit5view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit5lvl + "," + App.token;
                                             }
                                             else if (conduit6lvl == null)
                                             {
-                                              
+
                                                 conduit6lvl = GetConduitLevel(traits.conduit_socket.socket.rank.ToString());
-                                                conduit6view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit6lvl + "," + token;
+                                                conduit6view = "Conduit" + traits.conduit_socket.socket.conduit.id.ToString() + "," + traits.conduit_socket.socket.rank.ToString() + "," + conduit6lvl + "," + App.token;
                                             }
                                         }
 
@@ -607,7 +580,7 @@ namespace Notes.Views
                                 }
 
                             }
-                            }
+                        }
                     }
                 }
                 responce.Close();
@@ -630,13 +603,13 @@ namespace Notes.Views
 
         void GetTeshTalentInfo(string link)
         {
-           
+
 
             try
             {
-                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
-                
+
                 using (Stream stream = responce.GetResponseStream())
 
                 {
@@ -649,7 +622,7 @@ namespace Notes.Views
 
 
                             TechTalent techTalent = JsonConvert.DeserializeObject<TechTalent>(line);
-                            
+
 
                             GetTeshTalentMedia(techTalent.media.key.href);
 
@@ -683,9 +656,9 @@ namespace Notes.Views
             WebClient dl = new WebClient();
             try
             {
-                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
-               
+
                 using (Stream stream = responce.GetResponseStream())
 
                 {
@@ -695,19 +668,19 @@ namespace Notes.Views
                         while ((line = reader.ReadLine()) != null)
                         {
 
-                           
+
 
                             TechTalentMedia techTalent = JsonConvert.DeserializeObject<TechTalentMedia>(line);
-                            
+
                             foreach (AssetTTMedia asst in techTalent.assets)
                             {
                                 if (trait1 == null)
                                 {
-                                    
+
                                     byte[] dl_trait;
                                     dl_trait = dl.DownloadData(asst.value);
                                     trait1 = ImageSource.FromStream(() => new MemoryStream(dl_trait));
-                                    
+
                                 }
                                 else if (trait2 == null)
                                 {
@@ -740,7 +713,7 @@ namespace Notes.Views
                                     trait6 = ImageSource.FromStream(() => new MemoryStream(dl_trait));
                                 }
                             }
-                            
+
 
 
 
@@ -768,10 +741,10 @@ namespace Notes.Views
         void GetConduitInfo(string link)
         {
 
-            
+
             try
             {
-                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
 
                 using (Stream stream = responce.GetResponseStream())
@@ -785,7 +758,7 @@ namespace Notes.Views
 
 
                             Conduit conduit = JsonConvert.DeserializeObject<Conduit>(line);
-                           
+
 
                             GetConduitItem(conduit.item.key.href);
 
@@ -816,10 +789,10 @@ namespace Notes.Views
         {
 
 
-           
+
             try
             {
-                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
 
                 using (Stream stream = responce.GetResponseStream())
@@ -830,11 +803,11 @@ namespace Notes.Views
                         string line = "";
                         while ((line = reader.ReadLine()) != null)
                         {
-                           
+
 
 
                             GetItem item = JsonConvert.DeserializeObject<GetItem>(line);
-                           
+
                             GetConduitMedia(item.media.key.href);
 
 
@@ -860,14 +833,14 @@ namespace Notes.Views
             }
         }
 
-            void GetConduitMedia(string link)
+        void GetConduitMedia(string link)
         {
-            
+
 
             WebClient dl = new WebClient();
             try
             {
-                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create(link + "&locale=" + App.localslug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
 
                 using (Stream stream = responce.GetResponseStream())
@@ -880,7 +853,7 @@ namespace Notes.Views
                         {
 
 
-                           
+
                             ItemMedia techTalent = JsonConvert.DeserializeObject<ItemMedia>(line);
 
                             foreach (AssetItemMedia asst in techTalent.assets)

@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Notes.Models;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 
 
 namespace Notes.Views
@@ -16,17 +16,83 @@ namespace Notes.Views
         public RaidingPage()
         {
             InitializeComponent();
-            Guild_raid_progress();
+            GetGuildRaidInfo();
         }
-
+        private BackgroundWorker main_info_worker;
         public void OnUpdateInfo(object sender, EventArgs e)
         {
             // UpdateInfo();
-            Guild_raid_progress();
+            GetGuildRaidInfo();
         }
+        public void GetGuildRaidInfo()
+        {
+            BackgroundImageSource = "Label_back";
+            Updater.IsRunning = true;
+            UpdaterGrid.IsVisible = true;
+            InfoGrid.IsVisible = false;
+            ErrorFrame.IsVisible = false;
+            Progress.Text = "0%";
 
 
-        private void Guild_raid_progress()
+            try
+            {
+
+
+
+                main_info_worker = new BackgroundWorker();
+
+                main_info_worker.WorkerReportsProgress = true;
+                main_info_worker.DoWork += new DoWorkEventHandler(Guild_raid_progress);
+                main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
+                main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Main_info_workerCompleted);
+                main_info_worker.RunWorkerAsync();
+
+
+
+
+
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    Updater.IsRunning = false;
+                    UpdaterGrid.IsVisible = false;
+                    InfoGrid.IsVisible = false;
+                    ErrorFrame.IsVisible = true;
+                    ErrorName.Text = "Ошибка";
+                    ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                    Console.WriteLine(e.Message);
+                }
+            }
+            catch (Exception e)
+            {
+                Updater.IsRunning = false;
+                UpdaterGrid.IsVisible = false;
+                InfoGrid.IsVisible = false;
+                ErrorFrame.IsVisible = true;
+                ErrorName.Text = "Ошибка";
+                ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                Console.WriteLine(e.Message);
+            }
+
+
+        }
+        void ProgressUpdater(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+                Progress.Text = e.ProgressPercentage.ToString() + "%";
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("EXSA" + ex.Message);
+            }
+
+
+        }
+        private void Guild_raid_progress(object sender, DoWorkEventArgs e)
         {
 
             try
@@ -44,122 +110,159 @@ namespace Notes.Views
                         while ((line = reader1.ReadLine()) != null)
                         {
                             GuildRaiderIO rio_guild = JsonConvert.DeserializeObject<GuildRaiderIO>(line);
-                            CNguild_raid_progress.Text = "Рейд прогресс: " + rio_guild.raid_progression.CastleNathria.summary;
+                            CNguildraidprogress = "Рейд прогресс: " + rio_guild.raid_progression.CastleNathria.summary;
                             if (rio_guild.raid_rankings.CastleNathria.mythic.world == 0)
                             {
                                 if (rio_guild.raid_rankings.CastleNathria.heroic.world == 0)
                                 {
                                     if (rio_guild.raid_rankings.CastleNathria.normal.world == 0)
                                     {
-                                        CNguild_rank_name.Text = "Сложность: " + "Обычный";
-                                        CNguild_rank_world.Text = "Мир: " + "0";
-                                        CNguild_rank_region.Text = "Регион: " + "0";
-                                        CNguild_rank_realm.Text = "Сервер: " + "0";
+                                        CNguildrankname = "Сложность: " + "Обычный";
+                                        CNguildrankworld = "Мир: " + "0";
+                                        CNguildrankregion = "Регион: " + "0";
+                                        CNguildrankrealm = "Сервер: " + "0";
 
                                     }
                                     else
                                     {
-                                        CNguild_rank_name.Text = "Сложность: " + "Обычный";
-                                        CNguild_rank_world.Text = "Мир: " + rio_guild.raid_rankings.CastleNathria.normal.world.ToString();
-                                        CNguild_rank_region.Text = "Регион: " + rio_guild.raid_rankings.CastleNathria.normal.region.ToString();
-                                        CNguild_rank_realm.Text = "Сервер: " + rio_guild.raid_rankings.CastleNathria.normal.realm.ToString();
+                                        CNguildrankname = "Сложность: " + "Обычный";
+                                        CNguildrankworld = "Мир: " + rio_guild.raid_rankings.CastleNathria.normal.world.ToString();
+                                        CNguildrankregion = "Регион: " + rio_guild.raid_rankings.CastleNathria.normal.region.ToString();
+                                        CNguildrankrealm = "Сервер: " + rio_guild.raid_rankings.CastleNathria.normal.realm.ToString();
                                     }
 
 
                                 }
                                 else
                                 {
-                                    CNguild_rank_name.Text = "Сложность: " + "Героический";
-                                    CNguild_rank_world.Text = "Мир: " + rio_guild.raid_rankings.CastleNathria.heroic.world.ToString();
-                                    CNguild_rank_region.Text = "Регион: " + rio_guild.raid_rankings.CastleNathria.heroic.region.ToString();
-                                    CNguild_rank_realm.Text = "Сервер: " + rio_guild.raid_rankings.CastleNathria.heroic.realm.ToString();
+                                    CNguildrankname = "Сложность: " + "Героический";
+                                    CNguildrankworld = "Мир: " + rio_guild.raid_rankings.CastleNathria.heroic.world.ToString();
+                                    CNguildrankregion = "Регион: " + rio_guild.raid_rankings.CastleNathria.heroic.region.ToString();
+                                    CNguildrankrealm = "Сервер: " + rio_guild.raid_rankings.CastleNathria.heroic.realm.ToString();
                                 }
 
                             }
                             else
                             {
-                                CNguild_rank_name.Text = "Сложность: " + "Мифический";
-                                CNguild_rank_world.Text = "Мир: " + rio_guild.raid_rankings.CastleNathria.mythic.world.ToString();
-                                CNguild_rank_region.Text = "Регион: " + rio_guild.raid_rankings.CastleNathria.mythic.region.ToString();
-                                CNguild_rank_realm.Text = "Сервер: " + rio_guild.raid_rankings.CastleNathria.mythic.realm.ToString();
+                                CNguildrankname = "Сложность: " + "Мифический";
+                                CNguildrankworld = "Мир: " + rio_guild.raid_rankings.CastleNathria.mythic.world.ToString();
+                                CNguildrankregion = "Регион: " + rio_guild.raid_rankings.CastleNathria.mythic.region.ToString();
+                                CNguildrankrealm = "Сервер: " + rio_guild.raid_rankings.CastleNathria.mythic.realm.ToString();
                             }
-                            SODguild_raid_progress.Text = "Рейд прогресс: " + rio_guild.raid_progression.SanctumOfDomination.summary;
+                            try
+                            {
+                                main_info_worker.ReportProgress(50);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("EXSA" + ex.Message);
+                            }
+                            SODguildraidprogress = "Рейд прогресс: " + rio_guild.raid_progression.SanctumOfDomination.summary;
                             if (rio_guild.raid_rankings.SanctumOfDomination.mythic.world == 0)
                             {
                                 if (rio_guild.raid_rankings.SanctumOfDomination.heroic.world == 0)
                                 {
                                     if (rio_guild.raid_rankings.SanctumOfDomination.normal.world == 0)
                                     {
-                                        SODguild_rank_name.Text = "Сложность: " + "Обычный";
-                                        SODguild_rank_world.Text = "Мир: " + "0";
-                                        SODguild_rank_region.Text = "Регион: " + "0";
-                                        SODguild_rank_realm.Text = "Сервер: " + "0";
+                                        SODguildrankname = "Сложность: " + "Обычный";
+                                        SODguildrankworld = "Мир: " + "0";
+                                        SODguildrankregion = "Регион: " + "0";
+                                        SODguildrankrealm = "Сервер: " + "0";
 
                                     }
                                     else
                                     {
-                                        SODguild_rank_name.Text = "Сложность: " + "Обычный";
-                                        SODguild_rank_world.Text = "Мир: " + rio_guild.raid_rankings.SanctumOfDomination.normal.world.ToString();
-                                        SODguild_rank_region.Text = "Регион: " + rio_guild.raid_rankings.SanctumOfDomination.normal.region.ToString();
-                                        SODguild_rank_realm.Text = "Сервер: " + rio_guild.raid_rankings.SanctumOfDomination.normal.realm.ToString();
+                                        SODguildrankname = "Сложность: " + "Обычный";
+                                        SODguildrankworld = "Мир: " + rio_guild.raid_rankings.SanctumOfDomination.normal.world.ToString();
+                                        SODguildrankregion = "Регион: " + rio_guild.raid_rankings.SanctumOfDomination.normal.region.ToString();
+                                        SODguildrankrealm = "Сервер: " + rio_guild.raid_rankings.SanctumOfDomination.normal.realm.ToString();
                                     }
 
 
                                 }
                                 else
                                 {
-                                    SODguild_rank_name.Text = "Сложность: " + "Героический";
-                                    SODguild_rank_world.Text = "Мир: " + rio_guild.raid_rankings.SanctumOfDomination.heroic.world.ToString();
-                                    SODguild_rank_region.Text = "Регион: " + rio_guild.raid_rankings.SanctumOfDomination.heroic.region.ToString();
-                                    SODguild_rank_realm.Text = "Сервер: " + rio_guild.raid_rankings.SanctumOfDomination.heroic.realm.ToString();
+                                    SODguildrankname = "Сложность: " + "Героический";
+                                    SODguildrankworld = "Мир: " + rio_guild.raid_rankings.SanctumOfDomination.heroic.world.ToString();
+                                    SODguildrankregion = "Регион: " + rio_guild.raid_rankings.SanctumOfDomination.heroic.region.ToString();
+                                    SODguildrankrealm = "Сервер: " + rio_guild.raid_rankings.SanctumOfDomination.heroic.realm.ToString();
                                 }
 
                             }
                             else
                             {
-                                SODguild_rank_name.Text = "Сложность: " + "Мифический";
-                                SODguild_rank_world.Text = "Мир: " + rio_guild.raid_rankings.SanctumOfDomination.mythic.world.ToString();
-                                SODguild_rank_region.Text = "Регион: " + rio_guild.raid_rankings.SanctumOfDomination.mythic.region.ToString();
-                                SODguild_rank_realm.Text = "Сервер: " + rio_guild.raid_rankings.SanctumOfDomination.mythic.realm.ToString();
+                                SODguildrankname = "Сложность: " + "Мифический";
+                                SODguildrankworld = "Мир: " + rio_guild.raid_rankings.SanctumOfDomination.mythic.world.ToString();
+                                SODguildrankregion = "Регион: " + rio_guild.raid_rankings.SanctumOfDomination.mythic.region.ToString();
+                                SODguildrankrealm = "Сервер: " + rio_guild.raid_rankings.SanctumOfDomination.mythic.realm.ToString();
+                            }
+                            try
+                            {
+                                main_info_worker.ReportProgress(100);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("EXSA" + ex.Message);
                             }
                         }
                     }
                 }
                 responcechar.Close();
             }
-            catch (WebException e)
+            catch (WebException ex)
             {
-                if (e.Status == WebExceptionStatus.ProtocolError)
+                if (ex.Status == WebExceptionStatus.ProtocolError)
                 {
 
-                    Console.WriteLine("Status Code : {0}", ((HttpWebResponse)e.Response).StatusCode);
-                    Console.WriteLine("Status Description : {0}", ((HttpWebResponse)e.Response).StatusDescription);
+                    Console.WriteLine("Status Code : {0}", ((HttpWebResponse)ex.Response).StatusCode);
+                    Console.WriteLine("Status Description : {0}", ((HttpWebResponse)ex.Response).StatusDescription);
 
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
 
             }
         }
+        private void Main_info_workerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundImageSource = "background";
+            Updater.IsRunning = false;
+            UpdaterGrid.IsVisible = false;
+            InfoGrid.IsVisible = true;
+            ErrorFrame.IsVisible = false;
+            SODguild_raid_progress.Text = SODguildraidprogress;
+            SODguild_rank_name.Text = SODguildrankname;
+            SODguild_rank_world.Text = SODguildrankworld;
+            SODguild_rank_region.Text = SODguildrankregion;
+            SODguild_rank_realm.Text = SODguildrankrealm;
 
+            CNguild_raid_progress.Text = CNguildraidprogress;
+            CNguild_rank_name.Text = CNguildrankname;
+            CNguild_rank_world.Text = CNguildrankworld;
+            CNguild_rank_region.Text = CNguildrankregion;
+            CNguild_rank_realm.Text = CNguildrankrealm;
+
+
+
+
+            //UpdateButton.IsEnabled = true;
+
+
+        }
+        string CNguildraidprogress;
+        string SODguildraidprogress;
+        string CNguildrankname;
+        string CNguildrankworld;
+        string CNguildrankregion;
+        string CNguildrankrealm;
+        string SODguildrankname;
+        string SODguildrankworld;
+        string SODguildrankregion;
+        string SODguildrankrealm;
 
         /*
-        static string guildRaidProgressMythic = "";
-        static string guildWorldRankMythic = "";
-        static string guildRegionRankMythic = "";
-        static string guildRealmRankMythic = "";
-
-        static string guildRaidProgressHeroic = "";
-        static string guildWorldRankHeroic = "";
-        static string guildRegionRankHeroic = "";
-        static string guildRealmRankHeroic = "";
-
-        static string guildRaidProgressNormal = "";
-        static string guildWorldRankNormal = "";
-        static string guildRegionRankNormal = "";
-        static string guildRealmRankNormal = "";
         private void Guild_raid_progress()
         {
 

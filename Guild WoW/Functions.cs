@@ -1,13 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
-using Notes.Models;
-
-using System.ComponentModel;
-
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace Notes
 {
@@ -45,6 +36,6 @@ namespace Notes
 
         }
 
-        
+
     }
 }

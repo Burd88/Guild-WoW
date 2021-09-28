@@ -51,9 +51,7 @@
                 <Label Text="RaiderIO"  FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="4"  FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                 
                 
-                <Button Released="Open_Link_Battlenet" TextTransform="Uppercase" ImageSource="button" Text="Battle.net" FontFamily="MORPHEUS.TTF" BackgroundColor="Transparent" TextColor="white" Grid.Row="5" >
-                    
-                </Button>
+                
             </Grid>
         </StackLayout>
     </ContentPage.Content>

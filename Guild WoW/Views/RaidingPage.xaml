@@ -8,76 +8,128 @@
 
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ScrollView>
+        
         <StackLayout  Spacing="0">
 
+            <Grid x:Name="ErrorFrame"  IsVisible="false" Margin="{StaticResource PageMargin}">
 
-            <Grid >
+
+                <Image x:Name="ErrorLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+
+
+                <Label x:Name="ErrorName" HorizontalTextAlignment="Center" FontSize="36" FontFamily="MORPHEUS.TTF" Grid.Row="1"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"     >
+
+                </Label>
+                <Label x:Name="ErrorText"  Margin="{StaticResource PageMargin}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="24" FontFamily="MORPHEUS.TTF" Grid.Row="2"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" 
+                   TextColor="Red"    >
+
+                </Label>
+
+                <Label  x:Name="ErrorSettingslabel" Text="Settings" FontFamily="MORPHEUS.TTF" TextColor="DarkRed" Grid.Row="3" FontSize="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+
+
+            </Grid>
+            <Grid x:Name="UpdaterGrid" IsVisible="false" Margin="{StaticResource PageMargin}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="500" />
 
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
 
                 </Grid.RowDefinitions>
 
-                <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
-                <Grid   Margin="0" Padding="15">
-                    
-                    <Grid  Grid.Row="0" RowSpacing="0">
-                       
-                            <Image   Source="sanctumofdominationsmall" />
-                       
-                    </Grid>
-                    
-                    <Grid  x:Name="SODGuildrank" Margin="0,0,0,15" RowSpacing="0" Grid.Row="1" >
 
-                        <!--        <Label  Text="Рейд прогресс:" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="2" FontAttributes="Bold" FontSize="Medium" TextColor="Red"  />
-                    -->
-                        <Label Text="Святилище Господства" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="DarkRed"/>
-                        <Label x:Name="SODguild_rank_name" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="1" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="SODguild_raid_progress" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="2" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="SODguild_rank_world" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="3" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="SODguild_rank_region" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="4" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="SODguild_rank_realm" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label HeightRequest="80"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="6" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                <Image x:Name="UpdateLogo" Source="Shadowlands_Logo.png" Grid.Row="0"></Image>
+                <ActivityIndicator x:Name="Updater"  
+                      
+                       Color="DarkRed"  
+                       BackgroundColor="Transparent" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Немного потерпим...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="2"/>
+                <Label FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="Получаю данные от Blizzard...." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3"/>
+                <Label x:Name="Progress" FontSize="Medium" TextColor="Black" FontAttributes="Bold" Text="{Binding progress}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="4"/>
 
-                    </Grid>
-                </Grid>
             </Grid>
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="500" />
 
 
-                    </Grid.RowDefinitions>
+            <ScrollView x:Name="InfoGrid"  IsVisible="false">
+                <Grid>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="500" />
 
-                    <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
-                    <Grid   Margin="0" Padding="15">
 
-                        <Grid  Grid.Row="0" RowSpacing="0">
+                        </Grid.RowDefinitions>
 
-                            <Image  HeightRequest="70" Source="castlenathriasmall" />
-                    </Grid>
+                        <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                        <Grid   Margin="0" Padding="15">
 
-                    <Grid  x:Name="CNGuildrank" RowSpacing="0" Grid.Row="1" >
+                            <Grid  Grid.Row="0" RowSpacing="0">
 
-                        <!--        <Label  Text="Рейд прогресс:" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="2" FontAttributes="Bold" FontSize="Medium" TextColor="Red"  />
+                                <Image   Source="sanctumofdominationsmall" />
+
+                            </Grid>
+
+                            <Grid  x:Name="SODGuildrank" Margin="0,0,0,15" RowSpacing="0" Grid.Row="1" >
+
+                                <!--        <Label  Text="Рейд прогресс:" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="2" FontAttributes="Bold" FontSize="Medium" TextColor="Red"  />
                     -->
-                        <Label Text="Замок Нафрия" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="DarkRed"/>
-                        <Label x:Name="CNguild_rank_name" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="1" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="CNguild_raid_progress" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="2" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="CNguild_rank_world" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="3" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="CNguild_rank_region" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="4" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label x:Name="CNguild_rank_realm" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
-                        <Label HeightRequest="80"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="6" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label Text="Святилище Господства" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="DarkRed"/>
+                                <Label x:Name="SODguild_rank_name" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="1" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="SODguild_raid_progress" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="2" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="SODguild_rank_world" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="3" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="SODguild_rank_region" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="4" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="SODguild_rank_realm" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label HeightRequest="80"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="6" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="500" />
+
+
+                        </Grid.RowDefinitions>
+
+                        <Image Source="Label_back_half" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="Fill"></Image>
+                        <Grid   Margin="0" Padding="15">
+
+                            <Grid  Grid.Row="0" RowSpacing="0">
+
+                                <Image  HeightRequest="70" Source="castlenathriasmall" />
+                            </Grid>
+
+                            <Grid  x:Name="CNGuildrank" RowSpacing="0" Grid.Row="1" >
+
+                                <!--        <Label  Text="Рейд прогресс:" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Grid.Row="2" FontAttributes="Bold" FontSize="Medium" TextColor="Red"  />
+                    -->
+                                <Label Text="Замок Нафрия" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" FontFamily="MORPHEUS.TTF" FontSize="Medium" TextColor="DarkRed"/>
+                                <Label x:Name="CNguild_rank_name" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="1" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="CNguild_raid_progress" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="2" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="CNguild_rank_world" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="3" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="CNguild_rank_region" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="4" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label x:Name="CNguild_rank_realm" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="5" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+                                <Label HeightRequest="80"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="6" FontFamily="MORPHEUS.TTF" FontSize="Small" TextColor="DarkRed"/>
+
+                            </Grid>
+
 
                         </Grid>
-
-
+                    </Grid>
                 </Grid>
-                </Grid>
-
-
-            </StackLayout>
             </ScrollView>
+
+
+
+        </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

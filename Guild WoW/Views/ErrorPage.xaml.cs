@@ -7,7 +7,7 @@ namespace Notes.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ErrorPage : ContentPage
     {
-        App app = new App();
+        
         public ErrorPage()
         {
             InitializeComponent();

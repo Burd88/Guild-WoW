@@ -137,113 +137,11 @@ namespace Notes.Views
 
 
 
-        private void MainInfoSaveSQL(string region)
-        {
-            UpdateInfoOther(region);
-            DataRow[] rows = guildCheck.Select();
-            bool needWrt = true;
-
-            if (rows.Length != 0)
-            {
-                for (int i = 0; i < rows.Length; i++)
-                {
-
-                    if (rows[i]["GuildName"].ToString() == GuildName.Text.Trim().Replace(" ", "-").ToLower() && rows[i]["Realm"].ToString() == realmSlug)
-                    {
-                        //guild_Name.Text = rows[i]["guild_name"].ToString();
-                        needWrt = false;
-                        Console.WriteLine("Write not Guild on SB");
-
-                    }
-                }
-            }
-            else
-            {
-                needWrt = true;
-            }
-
-            if (needWrt)
-            {
-
-                string connectionString = "datasource=185.130.83.244;port=3306;username=warcraft;password=Dwqi7mbEziT6jphl;database=guilds;CharSet=utf8";
-                string insert = "INSERT INTO " + region + "(`GuildName`, `Region`, `Realm`, `Locale`) " +
-                "VALUES ('" + GuildName.Text.Trim().Replace(" ", "-").ToLower() + "', '" + region.Trim().ToLower() + "', '" + realmSlug + "', '" + locale_value + "')";
-
-
-
-                MySqlConnection databaseConnection = new MySqlConnection(connectionString);
-                MySqlCommand commandDatabase = new MySqlCommand(insert, databaseConnection);
-
-                commandDatabase.CommandTimeout = 10;
-
-                try
-                {
-                    databaseConnection.Open();
-
-                    MySqlDataReader myReader = commandDatabase.ExecuteReader();
-
-                    //MessageBox.Show("User succesfully registered");
-
-                    databaseConnection.Close();
-                    Console.WriteLine("Write Guild on SB");
-                }
-                catch (Exception ex)
-                {
-
-
-                    Error.Text = ex.Message;
-                }
-
-
-            }
-
-        }
+     
 
         DataTable guildCheck;
-        private void UpdateInfoOther(string region)
-        {
-            guildCheck = new DataTable();
-
-            try
-            {
-
-                string Connection = "datasource=185.130.83.244;port=3306;username=warcraft;password=Dwqi7mbEziT6jphl;database=guilds;CharSet=utf8";
-                //Display query  
-                string GuildCheck = "select * from " + region + ";";
-
-
-                MySqlConnection Conn = new MySqlConnection(Connection);
-
-                MySqlCommand ConduitCommand = new MySqlCommand(GuildCheck, Conn);
-
-                Conn.Open();
-
-
-                MySqlDataAdapter GuildCheckAdapter = new MySqlDataAdapter
-                {
-                    SelectCommand = ConduitCommand
-                };
-
-                guildCheck.Clear();
-                GuildCheckAdapter.Fill(guildCheck);
-
-
-                //Error.Text = "ok table check";
-
-
-
-
-                Conn.Close();
-            }
-            catch (Exception ex)
-            {
-                Error.Text = ex.Message;
-                //  isError = true;
-                //  textError = ex.Message;
-            }
-
-        }
-        CultureInfo culture = CultureInfo.CurrentCulture;
+       
+        
         async void OnSaveButtonClicked(object sender, EventArgs e)
         {
             var guild = (Guild)BindingContext;

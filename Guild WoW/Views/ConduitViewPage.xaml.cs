@@ -1,16 +1,12 @@
-﻿using System;
-using Xamarin.Forms;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Notes.Models;
-
-using System.ComponentModel;
+using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using Xamarin.Forms;
 namespace Notes.Views
 {
-    
+
     [QueryProperty(nameof(LoadID), nameof(LoadID))]
     public partial class ConduitViewPage : ContentPage
     {
@@ -23,10 +19,10 @@ namespace Notes.Views
 
                 if (value.Contains("Conduit"))
                 {
-                    
-                   string settings = value.Replace("Conduit", "");
+
+                    string settings = value.Replace("Conduit", "");
                     string[] str = settings.Split(new char[] { ',' });
-                    
+
                     GetConduitInfo(str[0], str[1], str[2], str[3]);
                 }
                 else if (value.Contains("TechTalent"))
@@ -51,7 +47,7 @@ namespace Notes.Views
 
             try
             {
-                WebRequest request = WebRequest.Create("https://"+ App.region.ToLower() +".api.blizzard.com/data/wow/tech-talent/"+ id +"?namespace=static-eu" + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create("https://" + App.region.ToLower() + ".api.blizzard.com/data/wow/tech-talent/" + id + "?namespace=static-eu" + "&locale=" + App.localslug + "&access_token=" + token);
                 WebResponse responce = request.GetResponse();
 
                 using (Stream stream = responce.GetResponseStream())
@@ -71,7 +67,7 @@ namespace Notes.Views
                             Level.Text = "";
                             CastTime.Text = techTalent.spell_tooltip.cast_time;
 
-                            GetTeshTalentMedia(techTalent.media.key.href , token);
+                            GetTeshTalentMedia(techTalent.media.key.href, token);
 
 
 
@@ -158,7 +154,7 @@ namespace Notes.Views
 
             try
             {
-                WebRequest request = WebRequest.Create("https://"+ App.region.ToLower() + ".api.blizzard.com/data/wow/covenant/conduit/"+ id + "?namespace=static-" + App.region.ToLower() + "&locale=" + App.localslug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create("https://" + App.region.ToLower() + ".api.blizzard.com/data/wow/covenant/conduit/" + id + "?namespace=static-" + App.region.ToLower() + "&locale=" + App.localslug + "&access_token=" + token);
                 WebResponse responce = request.GetResponse();
 
                 using (Stream stream = responce.GetResponseStream())
@@ -169,10 +165,10 @@ namespace Notes.Views
                         string line = "";
                         while ((line = reader.ReadLine()) != null)
                         {
-                            
+
 
                             Conduit conduit = JsonConvert.DeserializeObject<Conduit>(line);
-                            foreach(RankConduit ranks in conduit.ranks)
+                            foreach (RankConduit ranks in conduit.ranks)
                             {
                                 if (ranks.tier == Convert.ToInt32(rank) - 1)
                                 {
@@ -180,11 +176,11 @@ namespace Notes.Views
                                     Level.Text = lvl;
                                     Description.Text = ranks.spell_tooltip.description;
                                     CastTime.Text = ranks.spell_tooltip.cast_time;
-                                    GetConduitItem(conduit.item.key.href , token);
+                                    GetConduitItem(conduit.item.key.href, token);
                                 }
                             }
 
-                            
+
 
 
 
@@ -232,7 +228,7 @@ namespace Notes.Views
 
                             GetItem item = JsonConvert.DeserializeObject<GetItem>(line);
 
-                            GetConduitMedia(item.media.key.href , token);
+                            GetConduitMedia(item.media.key.href, token);
 
 
 
@@ -257,7 +253,7 @@ namespace Notes.Views
             }
         }
 
-        void GetConduitMedia(string link , string token )
+        void GetConduitMedia(string link, string token)
         {
 
 
@@ -282,10 +278,10 @@ namespace Notes.Views
 
                             foreach (AssetItemMedia asst in techTalent.assets)
                             {
-                                
-                                    byte[] dl_trait;
-                                    dl_trait = dl.DownloadData(asst.value);
-                                    Image.Source = ImageSource.FromStream(() => new MemoryStream(dl_trait));
+
+                                byte[] dl_trait;
+                                dl_trait = dl.DownloadData(asst.value);
+                                Image.Source = ImageSource.FromStream(() => new MemoryStream(dl_trait));
 
                             }
 

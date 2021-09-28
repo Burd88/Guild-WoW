@@ -27,16 +27,11 @@ namespace Notes.Views
 
 
             UpdateInfo();
-            // BindingContext = new LogsPageViewModels();
+         
 
         }
 
-        // protected override void OnAppearing()
-        //    {
-        //       base.OnAppearing();
-        //        UpdateInfo();
-
-        //   }
+      
 
 
         public void UpdateInfo(object sender, DoWorkEventArgs e)
@@ -57,23 +52,7 @@ namespace Notes.Views
         }
 
 
-        public bool ServerConnect(string url)
-        {
-
-            Uri uri = new Uri(url);
-            try
-            {
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-
-                HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                httpWebRequest.Abort();
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
-        }
+       
         public void UpdateInfo()
         {
             if (App.guild_name != null)
@@ -123,17 +102,13 @@ namespace Notes.Views
 
         }
 
-        public static DateTime FromUnixTimeStampToDateTime(string unixTimeStamp) // конверстация времени
-        {
-
-            return DateTimeOffset.FromUnixTimeSeconds(long.Parse(unixTimeStamp) / 1000).LocalDateTime;
-        }
+        
 
         async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection != null)
             {
-                // Navigate to the NoteEntryPage, passing the filename as a query parameter.
+               
                 Logs log = (Logs)e.CurrentSelection.FirstOrDefault();
 
 
@@ -168,16 +143,13 @@ namespace Notes.Views
                         foreach (Logs_all log in logs.logs)
                         {
 
-                            logsall.Add(new Logs() { ID = index, Dungeon = log.title.ToString(), Date_start = FromUnixTimeStampToDateTime(log.start.ToString()).ToString(), Downloader = log.owner.ToString(), Link = "https://ru.warcraftlogs.com/reports/" + log.id.ToString() });
+                            logsall.Add(new Logs() { ID = index, Dungeon = log.title.ToString(), Date_start = Functions.FromUnixTimeStampToDateTime(log.start.ToString()).ToString(), Downloader = log.owner.ToString(), Link = "https://ru.warcraftlogs.com/reports/" + log.id.ToString() });
 
-                            //  add_guild_wow_logs(index, log.title.ToString(), log.start.ToString(), log.end.ToString(), log.owner.ToString(), "https://ru.warcraftlogs.com/reports/" + log.id.ToString());
-                            // index++;
-                            // logs_list.Add(new Logs() { Dungeon = log.title, Date_start = FromUnixTimeStampToDateTime(log.start).ToString(), Date_end = FromUnixTimeStampToDateTime(log.end).ToString(), Downloader = log.owner, Link = "https://ru.warcraftlogs.com/reports/" + log.id });
-
+                           
                         }
 
 
-                        //  logs_datagrid.ItemsSource = logs_list;
+                      
 
 
 

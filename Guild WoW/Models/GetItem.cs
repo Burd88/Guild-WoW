@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Notes.Models
 {
@@ -99,7 +97,7 @@ namespace Notes.Models
     }
 
     public class GetItem
-    { 
+    {
         public LinksItem _links { get; set; }
         public int id { get; set; }
         public string name { get; set; }

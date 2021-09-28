@@ -92,7 +92,7 @@ namespace Notes.Views
             {
                 // Navigate to the NoteEntryPage, passing the filename as a query parameter.
                 Member note = (Member)e.CurrentSelection.FirstOrDefault();
-
+                App.viewMember = note.Name;
                 await Shell.Current.GoToAsync($"{nameof(AllViewPage)}?{nameof(AllViewPage.LoadName)}={note.Name}");
 
             }

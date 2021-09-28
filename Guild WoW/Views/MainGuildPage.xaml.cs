@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Notes.Data;
 using Notes.Models;
 using System;
 using System.ComponentModel;
@@ -25,26 +26,46 @@ namespace Notes.Views
         private string guildFaction;
         private string realmstatus;
         private string realmId;
-        int guildcountMembers = 0;
+        
         string guildLeader = "";
         long guildTimeCreate = 0;
         string guildName = "";
         string token = "";
+        static NoteDatabase database;
+        bool error = false;
+        string errorText;
+        public static string db;
+        // Create the database connection as a singleton.
+        public static NoteDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+
+                    database = new NoteDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Guild.db3"));
+
+                }
+
+                return database;
+            }
+        }
+        [Obsolete]
         public MainGuildPage()
         {
             InitializeComponent();
             LoadNote("1");
         }
-        static public Guild guild;
+        static public Guild guild = new Guild();
 
-
+        [Obsolete]
         async void LoadNote(string itemId)
         {
             try
             {
                 int id = Convert.ToInt32(itemId);
                 // Retrieve the note and set it as the BindingContext of the page.
-                guild = await App.Database.GetNoteAsync(id);
+                guild = await Database.GetNoteAsync(id);
 
 
                 if (guild != null)
@@ -61,6 +82,7 @@ namespace Notes.Views
                     App.guild_name = name;
                     InfoGrid.IsVisible = true;
                     AutorizationsBattleNet();
+
 
 
 
@@ -81,18 +103,10 @@ namespace Notes.Views
             }
         }
 
-
-
-      
-
-      
-     
-
-
-       
+        [Obsolete]
         public void OnUpdateInfo(object sender, EventArgs e)
         {
-
+            guild = new Guild();
             LoadNote("1");
         }
 
@@ -119,7 +133,6 @@ namespace Notes.Views
             ErrorFrame.IsVisible = false;
             Progress.Text = "0%";
 
-
             try
             {
 
@@ -128,6 +141,7 @@ namespace Notes.Views
                     httpClient.DefaultRequestHeaders.ConnectionClose = true;
                     using (HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("POST"), "https://" + App.region + ".battle.net/oauth/token"))
                     {
+
                         string base64authorization = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes("5adf246bde3d4a41a3792c229a6e425c:sBbit3bF6v0hSUzpPDPJIzy36dZhVwFq"));
                         request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
 
@@ -137,15 +151,11 @@ namespace Notes.Views
                         HttpResponseMessage response = await httpClient.SendAsync(request);
                         Token_for_api my_token = JsonConvert.DeserializeObject<Token_for_api>(response.Content.ReadAsStringAsync().Result);
 
-                        token = my_token.access_token;
+                        App.token = my_token.access_token;
 
-                        main_info_worker = new BackgroundWorker();
 
-                        main_info_worker.WorkerReportsProgress = true;
-                        main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
-                        main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
-                        main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Main_info_workerCompleted);
-                        main_info_worker.RunWorkerAsync();
+
+                        GetGuildMainInfo();
 
 
 
@@ -165,6 +175,64 @@ namespace Notes.Views
                     ErrorFrame.IsVisible = true;
                     ErrorName.Text = "Ошибка";
                     ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                    Console.WriteLine(e.Message);
+                }
+            }
+            catch (Exception e)
+            {
+                Updater.IsRunning = false;
+                UpdaterGrid.IsVisible = false;
+                InfoGrid.IsVisible = false;
+                ErrorFrame.IsVisible = true;
+                ErrorName.Text = "Ошибка";
+                ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                Console.WriteLine(e.Message);
+            }
+
+
+        }
+        [Obsolete]
+        public void GetGuildMainInfo()
+        {
+            Updater.IsRunning = true;
+            UpdaterGrid.IsVisible = true;
+            InfoGrid.IsVisible = false;
+            ErrorFrame.IsVisible = false;
+            Progress.Text = "0%";
+
+
+            try
+            {
+
+
+
+                main_info_worker = new BackgroundWorker()
+                {
+                    WorkerReportsProgress = true
+            };
+
+                
+                main_info_worker.DoWork += new DoWorkEventHandler(UpdateInfo);
+                main_info_worker.ProgressChanged += new ProgressChangedEventHandler(ProgressUpdater);
+                main_info_worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Main_info_workerCompleted);
+                main_info_worker.RunWorkerAsync();
+
+
+
+
+
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    Updater.IsRunning = false;
+                    UpdaterGrid.IsVisible = false;
+                    InfoGrid.IsVisible = false;
+                    ErrorFrame.IsVisible = true;
+                    ErrorName.Text = "Ошибка";
+                    ErrorText.Text = "Нет сети/Сервер не доступен.\nПопробуйте позже.";
+                    Console.WriteLine(e.Message);
                 }
             }
             catch (Exception e)
@@ -190,47 +258,60 @@ namespace Notes.Views
         [Obsolete]
         private void Main_info_workerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-
-            guild_Name.Text = guildName;
-            if (guildFaction == "HORDE")
+            if (error == false)
             {
-                guild_Name.TextColor = Color.DarkRed;
+                Updater.IsRunning = false;
+                UpdaterGrid.IsVisible = false;
+                InfoGrid.IsVisible = true;
+                ErrorFrame.IsVisible = false;
+                UpdateButton.IsEnabled = true;
+                guild_Name.Text = guildName;
+                if (guildFaction == "HORDE")
+                {
+                    guild_Name.TextColor = Color.DarkRed;
+                }
+                else
+                {
+                    guild_Name.TextColor = Color.Blue;
+                }
+                guild_leader_name.Text = AppResources.LiderText + guildLeader;
+
+                guild_members_count.Text = AppResources.GuildMemberText + memberCount;
+                guild_achiv.Text = AppResources.GuldAchivText + guildAchiv;
+                guild_created.Text = AppResources.GuildCreateText + Functions.FromUnixTimeStampToDateTime(guildTimeCreate.ToString()).ToString();
+                BackEmblem.Fill = new SolidColorBrush(Color.FromRgb(emblemColorRed, emblemColorGreen, emblemColorBlue));
+
+
+
+
+                Emblem.Source = ImageSource.FromStream(() => new MemoryStream(emblemByte));
+
+
+
+                RealmNameLabelStart.Text = AppResources.RealStatuslabelText;
+                RealmNameLabel.Text = guild.Realm;
+                if (realmstatus == "UP")
+                {
+                    RealmImageStatus.Source = "RealmOk";
+                    RealmStatusLabel.Text = AppResources.RealmStatusUp;
+                    RealmStatusLabel.TextColor = Color.Green;
+                }
+                else
+                {
+                    RealmImageStatus.Source = "RealmFalse";
+                    RealmStatusLabel.TextColor = Color.Red;
+                }
             }
             else
             {
-                guild_Name.TextColor = Color.Blue;
+                Updater.IsRunning = false;
+                UpdaterGrid.IsVisible = false;
+                InfoGrid.IsVisible = false;
+                ErrorFrame.IsVisible = true;
+                ErrorName.Text = "Ошибка";
+                ErrorText.Text = errorText;
             }
-            guild_leader_name.Text = AppResources.LiderText + guildLeader;
 
-            guild_members_count.Text = AppResources.GuildMemberText + memberCount;
-            guild_achiv.Text = AppResources.GuldAchivText + guildAchiv;
-            guild_created.Text = AppResources.GuildCreateText + Functions.FromUnixTimeStampToDateTime(guildTimeCreate.ToString()).ToString();
-            BackEmblem.Fill = new SolidColorBrush(Color.FromRgb(emblemColorRed, emblemColorGreen, emblemColorBlue));
-
-
-
-
-            Emblem.Source = ImageSource.FromStream(() => new MemoryStream(emblemByte));
-
-
-            Updater.IsRunning = false;
-            UpdaterGrid.IsVisible = false;
-            InfoGrid.IsVisible = true;
-            ErrorFrame.IsVisible = false;
-            UpdateButton.IsEnabled = true;
-            RealmNameLabelStart.Text = AppResources.RealStatuslabelText;
-            RealmNameLabel.Text = guild.Realm;
-            if (realmstatus == "UP")
-            {
-                RealmImageStatus.Source = "RealmOk";
-                RealmStatusLabel.Text = AppResources.RealmStatusUp;
-                RealmStatusLabel.TextColor = Color.Green;
-            }
-            else
-            {
-                RealmImageStatus.Source = "RealmFalse";
-                RealmStatusLabel.TextColor = Color.Red;
-            }
 
 
         }
@@ -253,10 +334,10 @@ namespace Notes.Views
         }
         void GuildUpdateFuncton()
         {
-            guildcountMembers = 0;
+            
             try
             {
-                WebRequest request = WebRequest.Create("https://" + guild.Region.ToLower() + ".api.blizzard.com/data/wow/guild/" + guild.RealmSlug + "/" + guild.GuildSlug + "/roster?namespace=profile-" + guild.Region.ToLower() + "&locale=" + guild.LocalSlug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create("https://" + guild.Region.ToLower() + ".api.blizzard.com/data/wow/guild/" + guild.RealmSlug + "/" + guild.GuildSlug + "/roster?namespace=profile-" + guild.Region.ToLower() + "&locale=" + guild.LocalSlug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
                 App.guildRoster = new System.Collections.Generic.List<GuildRosterMain>();
                 using (System.IO.Stream stream = responce.GetResponseStream())
@@ -294,22 +375,22 @@ namespace Notes.Views
                                 }
 
 
-                                guildcountMembers++;
+
 
 
                                 try
                                 {
-                                    main_info_worker.ReportProgress(guildcountMembers * 100 / guild.members.Count);
+                                    main_info_worker.ReportProgress(33);
                                 }
                                 catch (Exception ex)
                                 {
                                     Console.WriteLine("EXSA" + ex.Message);
                                 }
                             }
-                            Guild_emblem_image_load(token);
+                            Guild_emblem_image_load();
 
 
-
+                            error = false;
                         }
                     }
                 }
@@ -319,24 +400,27 @@ namespace Notes.Views
             {
                 if (er.Status == WebExceptionStatus.ProtocolError)
                 {
-
+                    error = true;
+                    errorText = er.Message;
                 }
             }
             catch (Exception er)
             {
+                error = true;
+                errorText = er.Message;
                 Console.WriteLine(er.Message);
             }
 
 
         }
 
-       
-        private void Guild_emblem_image_load(string token)
+
+        private void Guild_emblem_image_load()
         {
 
             try
             {
-                WebRequest requestchar = WebRequest.Create("https://" + guild.Region.ToLower() + ".api.blizzard.com/data/wow/guild/" + guild.RealmSlug + "/" + guild.GuildSlug + "?namespace=profile-" + guild.Region.ToLower() + "&locale=" + guild.Region.ToLower() + "&access_token=" + token);
+                WebRequest requestchar = WebRequest.Create("https://" + guild.Region.ToLower() + ".api.blizzard.com/data/wow/guild/" + guild.RealmSlug + "/" + guild.GuildSlug + "?namespace=profile-" + guild.Region.ToLower() + "&locale=" + guild.Region.ToLower() + "&access_token=" + App.token);
 
                 WebResponse responcechar = requestchar.GetResponse();
 
@@ -376,12 +460,20 @@ namespace Notes.Views
                             emblemColorGreen = guildmain.crest.background.color.rgba.g;
                             emblemColorRed = guildmain.crest.background.color.rgba.r;
                             emblemColorBlue = guildmain.crest.background.color.rgba.b;
-                           
 
-                         
+
+
                             emblemByte = dl.DownloadData(dl_emb);
 
-
+                            try
+                            {
+                                main_info_worker.ReportProgress(66);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("EXSA" + ex.Message);
+                            }
+                            error = false;
                         }
 
                     }
@@ -389,6 +481,8 @@ namespace Notes.Views
             }
             catch (Exception e)
             {
+                error = true;
+                errorText = e.Message;
                 Console.WriteLine(e.Message);
             }
         }
@@ -398,7 +492,7 @@ namespace Notes.Views
             try
             {
 
-                WebRequest request = WebRequest.Create("https://" + guild.Region.ToLower() + ".api.blizzard.com/data/wow/connected-realm/" + realmId + "?namespace=dynamic-" + guild.Region.ToLower() + "&locale=" + guild.LocalSlug + "&access_token=" + token);
+                WebRequest request = WebRequest.Create("https://" + guild.Region.ToLower() + ".api.blizzard.com/data/wow/connected-realm/" + realmId + "?namespace=dynamic-" + guild.Region.ToLower() + "&locale=" + guild.LocalSlug + "&access_token=" + App.token);
                 WebResponse responce = request.GetResponse();
 
                 using (System.IO.Stream stream = responce.GetResponseStream())
@@ -415,7 +509,15 @@ namespace Notes.Views
 
                             realmstatus = realm.status.type;
 
-
+                            try
+                            {
+                                main_info_worker.ReportProgress(100);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("EXSA" + ex.Message);
+                            }
+                            error = false;
                         }
                     }
                 }
@@ -425,11 +527,14 @@ namespace Notes.Views
             {
                 if (er.Status == WebExceptionStatus.ProtocolError)
                 {
-
+                    error = true;
+                    errorText = er.Message;
                 }
             }
             catch (Exception er)
             {
+                error = true;
+                errorText = er.Message;
                 Console.WriteLine(er.Message);
             }
 
